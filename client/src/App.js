@@ -60,10 +60,10 @@ function App() {
               </thead>
               <tbody>
                 {users.map(user => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.name || user.firstname + ' ' + user.lastname}</td>
-                    <td>{user.email}</td>
+                  <tr key={user.name}>
+                    <td>{user.name}</td>
+                    <td>{user.section}</td>
+                    <td>{user.favoritemovie}</td>
                   </tr>
                 ))}
               </tbody>
