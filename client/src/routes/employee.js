@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const { Pool } = require('pg');
+const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 // DB connection
 // Create pool
