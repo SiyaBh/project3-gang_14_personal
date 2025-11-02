@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const { Pool } = require('pg');
-const dotenv = require('dotenv').config();
-require('dotenv').config();
+const dotenv = require('dotenv');
 
-// Database connection
+dotenv.config();
+
+// Create PostgreSQL pool using environment variables
 const pool = new Pool({
-    user: 'gang_14',
-    host: 'csce-315-db.engr.tamu.edu',
-    database: 'gang_14_db',
-    password: 'D0fXm2QW', 
-    port: 5432,
+    user: process.env.PSQL_USER,
+    host: process.env.PSQL_HOST,
+    database: process.env.PSQL_DATABASE,
+    password: process.env.PSQL_PASSWORD,
+    port: process.env.PSQL_PORT,
+    ssl: { rejectUnauthorized: false }
 });
+
 
 // Get all drinks
 router.get('/', async (req, res) => {
@@ -45,7 +48,6 @@ router.put('/:product_name', async (req, res) => {
     const { new_price } = req.body;
 
     try {
-        // Get the old price of the base drink
         const oldPriceResult = await pool.query(
             'SELECT price FROM drink WHERE product_name = $1 LIMIT 1',
             [product_name]
@@ -58,7 +60,6 @@ router.put('/:product_name', async (req, res) => {
         const oldPrice = parseFloat(oldPriceResult.rows[0].price);
         const priceDifference = parseFloat(new_price) - oldPrice;
 
-        // Update ALL drinks with the same product_name (includes customizations)
         const result = await pool.query(
             'UPDATE drink SET price = price + $1 WHERE product_name = $2 RETURNING *',
             [priceDifference, product_name]
@@ -79,7 +80,10 @@ router.delete('/:product_name', async (req, res) => {
     const { product_name } = req.params;
 
     try {
-        const result = await pool.query('DELETE FROM drink WHERE product_name = $1 RETURNING *', [product_name]);
+        const result = await pool.query(
+            'DELETE FROM drink WHERE product_name = $1 RETURNING *',
+            [product_name]
+        );
 
         if (result.rowCount === 0) {
             return res.status(404).json({ error: 'No drinks found with that name' });
@@ -93,6 +97,13 @@ router.delete('/:product_name', async (req, res) => {
         console.error('Error deleting drink:', err);
         res.status(500).json({ error: 'Server error' });
     }
+});
+
+// Graceful shutdown (optional if you handle in app.js)
+process.on('SIGINT', function () {
+    pool.end();
+    console.log('Database pool closed due to app termination');
+    process.exit(0);
 });
 
 module.exports = router;
