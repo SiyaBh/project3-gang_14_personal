@@ -8,13 +8,13 @@ app.use(cors());
 app.use(express.json());
 
 
-const employeeRoutes = require('./routes/employee.js');
-const ingredientRoutes = require('./routes/ingredient');
-const productRoutes = require('./routes/product');
+const employeeRouter = require('./routes/employee.js');
+const ingredientRouter = require('./routes/ingredient');
+const drinkRouter = require('./routes/drink');
 
-app.use('/employee', employeeRoutes);
-app.use('/ingredient', ingredientRoutes);
-app.use('/product', productRoutes);
+app.use('/api/employee', employeeRouter);
+app.use('/api/ingredient', ingredientRouter);
+app.use('/api/drinks', drinkRouter);
 
 
 
