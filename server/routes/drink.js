@@ -18,14 +18,15 @@ const pool = new Pool({
 
 // Get all drinks
 router.get('/', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM drink ORDER BY product_name');
-        res.json(result.rows);
-    } catch (err) {
-        console.error('Error fetching drinks:', err);
-        res.status(500).json({ error: 'Server error' });
-    }
+  try {
+    const result = await pool.query('SELECT * FROM drink ORDER BY product_name');
+    res.json(result.rows); // rows is an array
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
+
 
 // Add a new drink
 router.post('/', async (req, res) => {
