@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// 🟡 Update all drinks by product_name and adjust customizations
+// Update all drinks by product_name and adjust customizations
 router.put('/:product_name', async (req, res) => {
     const { product_name } = req.params;
     const { new_price } = req.body;
@@ -74,7 +74,7 @@ router.put('/:product_name', async (req, res) => {
     }
 });
 
-// 🔴 Delete all drinks with the same product_name
+// Delete all drinks with the same product_name
 router.delete('/:product_name', async (req, res) => {
     const { product_name } = req.params;
 
