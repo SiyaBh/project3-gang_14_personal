@@ -6,11 +6,13 @@ export default function ProtectedRoute({ children, role }) {
   const { user } = useContext(AuthContext);
 
   if (!user) {
-    return <Navigate to="/login" />;
+    // If no user, redirect to login
+    return <Navigate to="/login" replace />;
   }
 
-  if (user.role !== role) {
-    return <Navigate to="/" />;
+  if (role && user.role.toLowerCase() !== role.toLowerCase()) {
+    // If user role doesn't match, redirect to welcome
+    return <Navigate to="/" replace />;
   }
 
   return children;
