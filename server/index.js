@@ -10,10 +10,12 @@ app.use(express.json());
 const employeeRouter = require('./routes/employee');
 const ingredientRouter = require('./routes/ingredients');
 const drinkRouter = require('./routes/drink');
+const orderRouter = require('/routes/order')
 
 app.use('/api/employee', employeeRouter);
 app.use('/api/ingredients', ingredientRouter);
 app.use('/api/drinks', drinkRouter);
+app.use('/api/order', orderRouter);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

@@ -1,8 +1,8 @@
 // client/src/pages/manager/ManagerDashboard.js
 import React, { useState } from 'react';
-// import MenuManagement from '../../components/MenuManagement';
+import DrinksList from '../../components/DrinksList';
 import IngredientsManagement from '../../components/IngredientsManagement';
-// import EmployeeManagement from '../../components/EmployeeManagement';
+import EmployeeManagement from '../../components/EmployeeManagement';
 // import AnalyticsAndTrends from '../../components/AnalyticsAndTrends';
 
 const colors = {
@@ -95,9 +95,9 @@ export default function ManagerDashboard() {
           padding: '30px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         }}>
-          {/* {activeTab === 'menu' && <MenuManagement />} */}
+          { activeTab === 'menu' && <DrinksList />}
           {activeTab === 'ingredients' && <IngredientsManagement />}
-          {/* {activeTab === 'employees' && <EmployeeManagement />} */}
+          { activeTab === 'employees' && <EmployeeManagement />}
           {/* {activeTab === 'analytics' && <AnalyticsAndTrends />} */}
         </div>
       </div>
