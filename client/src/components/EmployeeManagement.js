@@ -1,6 +1,6 @@
 // client/src/components/EmployeeManagement.js
 import { useEffect, useState } from "react";
-import { getEmployees, addEmployee, updateEmployee, deleteEmployee } from "../api/employees";
+import { getEmployees, addEmployee, updateEmployee, deleteEmployee } from "../api/employee";
 import { Plus, Edit2, Trash2, Save, X, RefreshCw } from 'lucide-react';
 
 const colors = {
