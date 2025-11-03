@@ -18,6 +18,7 @@ None
 Renee
 Setting up postman and starting weather api
 Work on implementing weather api in server + client
+The class of 313
 Ananya
 Manager dashboard UI
 Google Authentication
