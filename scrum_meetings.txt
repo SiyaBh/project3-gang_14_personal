@@ -1,0 +1,24 @@
+11/03/2025
+
+Meeting Agenda
+Everyone describe:
+What they have done
+What they plan to do
+Roadblocks/Blockers?
+
+Meeting Minutes:
+Marisol 
+Design cashier dashboard
+Implement design in React
+The class of 313
+Siya
+API Routes
+Manager trends page
+None
+Renee
+Setting up postman and starting weather api
+Work on implementing weather api in server + client
+Ananya
+Manager dashboard UI
+Google Authentication
+None
