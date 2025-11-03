@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/api/customerview';
-
-
-export const getDrinks = () => axios.get(`${BASE_URL}/drinks`).then(res => res.data);
+const BASE_URL = 'http://localhost:3001/api/order';
 
 
 export const getOrders = () => axios.get(`${BASE_URL}/orders`).then(res => res.data);
