@@ -7,12 +7,12 @@ const port = 3001; // usually server is 3001, React runs on 3000
 app.use(cors());
 app.use(express.json());
 
-const employeeRouter = require('./routes/employee.js');
+const employeeRouter = require('./routes/employee');
 const ingredientRouter = require('./routes/ingredients');
 const drinkRouter = require('./routes/drink');
 
 app.use('/api/employee', employeeRouter);
-app.use('/api/ingredient', ingredientRouter);
+app.use('/api/ingredients', ingredientRouter);
 app.use('/api/drinks', drinkRouter);
 
 app.listen(port, () => {

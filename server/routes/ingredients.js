@@ -1,4 +1,4 @@
-// routes/ingredient.js
+// routes/ingredients.js
 const express = require('express');
 const router = express.Router();
 const { Pool } = require('pg');
@@ -26,11 +26,11 @@ router.get('/', async (req, res) => {
 
 // Add a new ingredient
 router.post('/', async (req, res) => {
-    const { ingredient_name, stock, price } = req.body;
+    const { ingredient_id, ingredient_name, stock, price } = req.body;
     try {
         const result = await pool.query(
-            'INSERT INTO ingredient (ingredient_name, stock, price) VALUES ($1, $2, $3) RETURNING *',
-            [ingredient_name, stock, price]
+            'INSERT INTO ingredient (ingredient_id, ingredient_name, stock, price) VALUES ($1, $2, $3, $4) RETURNING *',
+            [ingredient_id, ingredient_name, stock, price]
         );
         res.json(result.rows[0]);
     } catch (err) {
