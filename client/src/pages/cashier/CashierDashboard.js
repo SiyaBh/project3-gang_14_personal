@@ -20,7 +20,7 @@ export default function CashierDashboard() {
         <h1 className="dashboard-header">Cashier Dashboard</h1>
 
         {/* Tabs */}
-        <C_MenuCategoryTabs />
+        <C_MenuCategoryTabs selected={category} onSelect={setCategory} />
 
         {/* Grid */}
         <C_MenuGrid items = {filteredMenu} />

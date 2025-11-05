@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../styles/C_MenuCategoryTabs.css";
 
-export default function C_MenuCategoryTabs() {
+export default function C_MenuCategoryTabs({ selected, onSelect }) {
   const categories = ["Milk Teas", "Fruit Teas", "Non-Cafe", "Matcha", "Ice Blended", "Seasonal"];
-  const [selected, setSelected] = useState("Milk Teas");
 
   return (
     <div className="tabs-container">
@@ -11,7 +10,7 @@ export default function C_MenuCategoryTabs() {
         <button
           key={cat}
           className={`tab ${selected === cat ? "selected" : ""}`}
-          onClick={() => setSelected(cat)}
+          onClick={() => onSelect(cat)}
         >
           {cat}
         </button>
