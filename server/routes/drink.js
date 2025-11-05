@@ -19,16 +19,18 @@ const pool = new Pool({
 // Get all drinks
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query(`SELECT DISTINCT d.*
-FROM drink d
-JOIN (
-    SELECT product_name, MIN(price) AS min_price
-    FROM drink
-    GROUP BY product_name
-) AS min_drink
-ON d.product_name = min_drink.product_name
-   AND d.price = min_drink.min_price
-ORDER BY d.product_name`);
+    const result = await pool.query(`SELECT
+    product_name,
+    MIN(product_type) AS product_type,
+    MIN(price) AS price,
+    MIN(season) AS season,
+    MIN(available_months) AS available_months
+FROM
+    drink
+GROUP BY
+    product_name
+ORDER BY
+    product_name;`);
     res.json(result.rows); // rows is an array
   } catch (err) {
     console.error(err);
@@ -55,35 +57,35 @@ router.post('/', async (req, res) => {
 // Update all drinks by product_name and adjust customizations
 router.put('/:product_name', async (req, res) => {
     const { product_name } = req.params;
-    const { new_price } = req.body;
+    const { price, product_type, season, available_months } = req.body;
 
     try {
-        const oldPriceResult = await pool.query(
-            'SELECT price FROM drink WHERE product_name = $1 LIMIT 1',
-            [product_name]
+        const result = await pool.query(
+            `UPDATE drink 
+             SET price = $1, 
+                 product_type = $2, 
+                 season = $3, 
+                 available_months = $4
+             WHERE product_name = $5
+             RETURNING *`,
+            [price, product_type, season, available_months, product_name]
         );
 
-        if (oldPriceResult.rows.length === 0) {
+        if (result.rowCount === 0) {
             return res.status(404).json({ error: 'Drink not found' });
         }
-
-        const oldPrice = parseFloat(oldPriceResult.rows[0].price);
-        const priceDifference = parseFloat(new_price) - oldPrice;
-
-        const result = await pool.query(
-            'UPDATE drink SET price = price + $1 WHERE product_name = $2 RETURNING *',
-            [priceDifference, product_name]
-        );
 
         res.json({
             message: `Updated ${result.rowCount} drink(s) with name "${product_name}".`,
             updatedDrinks: result.rows
         });
+
     } catch (err) {
         console.error('Error updating drink:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
+
 
 // Delete all drinks with the same product_name
 router.delete('/:product_name', async (req, res) => {
