@@ -12,7 +12,7 @@ const ingredientRouter = require('./routes/ingredients');
 const drinkRouter = require('./routes/drink');
 const orderRouter = require('./routes/order');
 const trendsRouter = require('./routes/trends');
-
+const authRoutes = require('./routes/auth');
 
 app.use('/api/employee', employeeRouter);
 app.use('/api/ingredients', ingredientRouter);
@@ -20,7 +20,7 @@ app.use('/api/drinks', drinkRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/trends', trendsRouter);
 app.use('/auth', authRoutes);
-const authRoutes = require('./routes/auth');
+
 
 
 
