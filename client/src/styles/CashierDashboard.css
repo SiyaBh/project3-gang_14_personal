@@ -1,0 +1,42 @@
+/* Container for the whole page */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background-color: #18181b;
+  color: black;
+}
+
+/* Left section */
+.left-section {
+  flex: 1;
+  background-color: rgb(205, 177, 177);
+  padding: 2.5rem; 
+  overflow-y: auto;
+}
+
+/* Header */
+.dashboard-header {
+  font-size:xx-large;
+  font-weight: 600;    
+  margin-bottom: 1.5rem; 
+}
+
+/* Logout button */
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+  background-color: #3C2A21;
+  color: white;
+  padding: 0.5rem 1.25rem; 
+  border-radius: 9999px; 
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #2a1d15;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
