@@ -10,14 +10,16 @@ app.use(express.json());
 const employeeRouter = require('./routes/employee');
 const ingredientRouter = require('./routes/ingredients');
 const drinkRouter = require('./routes/drink');
-const orderRouter = require('./routes/order')
-const authRoutes = require('./routes/auth');
+const orderRouter = require('./routes/order');
+const trendsRouter = require('./routes/trends');
+
 
 app.use('/api/employee', employeeRouter);
 app.use('/api/ingredients', ingredientRouter);
 app.use('/api/drinks', drinkRouter);
 app.use('/api/order', orderRouter);
-app.use('/auth', authRoutes);
+app.use('/api/trends', trendsRouter);
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

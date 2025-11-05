@@ -19,7 +19,16 @@ const pool = new Pool({
 // Get all drinks
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM drink ORDER BY product_name');
+    const result = await pool.query(`SELECT DISTINCT d.*
+FROM drink d
+JOIN (
+    SELECT product_name, MIN(price) AS min_price
+    FROM drink
+    GROUP BY product_name
+) AS min_drink
+ON d.product_name = min_drink.product_name
+   AND d.price = min_drink.min_price
+ORDER BY d.product_name`);
     res.json(result.rows); // rows is an array
   } catch (err) {
     console.error(err);
