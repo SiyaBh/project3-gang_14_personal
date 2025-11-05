@@ -1,0 +1,37 @@
+.menu-item-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: white; /* clear background */
+  border: 2px solid #B43F3F; /* red border */
+  border-radius: 1rem; /* rounded corners */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.menu-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item-image {
+  width: 6rem; /* 24 units as before */
+  height: 6rem;
+  object-fit: contain;
+  margin-bottom: 0.75rem;
+}
+
+.menu-item-name {
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.menu-item-price {
+  font-size: 0.875rem;
+  color: #555;
+}
