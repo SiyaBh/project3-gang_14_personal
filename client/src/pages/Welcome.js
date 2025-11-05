@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
+import Weather from "../components/weather";
 
 const colors = {
   primary: '#BF1834',
@@ -60,6 +61,7 @@ export default function Welcome() {
         </div>
 
       </div>
+      <Weather />
     </div>
   );
 }
