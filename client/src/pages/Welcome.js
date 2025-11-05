@@ -61,7 +61,12 @@ export default function Welcome() {
         </div>
 
       </div>
-      <Weather />
+      <div style={{
+        display: "flex",
+        justifyContent: "center"
+      }}>
+        <Weather />
+      </div>
     </div>
   );
 }
