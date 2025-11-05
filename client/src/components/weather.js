@@ -1,23 +1,17 @@
 import { useEffect, useState } from "react";
 import { getWeatherData } from "../api/weatherAPI";
 
-export default function Weather() {//hello
-    const[temperature, setTemperature] = useState(0.0); //temp is the state, setTemp is how it updates
+export default function Weather() {
+    const[temperature, setTemperature] = useState(0.0);
     const[weath, setWeath] = useState(null);
     const[id, setId] = useState(0);
-    //const[weathImage, setWeathImage] = useState(null);
-    //const weatherImage = document.createElement("p");
 
     const fetchData = async () => {
         try {
             const data = await getWeatherData();
             setTemperature(data.main.temp);
             setWeath(data.weather[0].description);
-            //setId(data.weather[0].id);
-            const weatherData = await getWeatherImage(data.weather[0].id);
-            setId(weatherData);
-            //setWeathImage(getWeatherImage(id));
-            //weatherImage.textContent = getWeatherImage(id);
+            setId(data.weather[0].id)
         } catch(error) {
             console.error("Failed to fetch weather: ", error);
         }
@@ -44,7 +38,11 @@ export default function Weather() {//hello
             
         }}>
             {}
-            <div>{id}</div>
+            <img
+                src={getWeatherImage(id)}
+                alt={weath}
+                style={{ width: "50px", height: "50px" }}
+            />
             {}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "20px" }}>
             <div style={{ fontSize: "16px", opacity: 0.8 }}>College Station, USA</div>
@@ -57,19 +55,21 @@ export default function Weather() {//hello
 function getWeatherImage(weatherId) {
     switch(true) {
         case(weatherId >= 200 && weatherId < 300):
-            return "thunderstorm";
+            return "../../images/thunderstorm.png";
         case(weatherId >= 300 && weatherId < 400):
-            return "drizzle";
+            return "../../images/drizzle.png";
         case(weatherId >= 500 && weatherId < 600):
-            return "rain";
+            return "../../images/rain.png";
         case(weatherId >= 600 && weatherId < 700):
-            return "snow";
+            return "../../images/snow.png";
         case(weatherId >= 700 && weatherId < 800):
-            return "atmosphere";
+            return "../../images/mist.png";
         case(weatherId === 800):
-            return "clear skies";
-        case(weatherId >= 801 && weatherId < 810):
-            return "clouds";
+            return "../../images/sun.png";
+        case(weatherId === 801 || weatherId === 802):
+            return "../../images/partly-cloudy.png";
+        case(weatherId === 803 || weatherId < 804):
+            return "../../images/cloudy.png";
         default:
             return "";
     }
