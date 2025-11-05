@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import DrinksList from '../../components/DrinksList';
 import IngredientsManagement from '../../components/IngredientsManagement';
 import EmployeeManagement from '../../components/EmployeeManagement';
-// import AnalyticsAndTrends from '../../components/AnalyticsAndTrends';
+import AnalyticsAndTrends from '../../components/AnalyticsAndTrends';
 
 const colors = {
   primary: '#BF1834',
@@ -98,7 +98,7 @@ export default function ManagerDashboard() {
           { activeTab === 'menu' && <DrinksList />}
           {activeTab === 'ingredients' && <IngredientsManagement />}
           { activeTab === 'employees' && <EmployeeManagement />}
-          {/* {activeTab === 'analytics' && <AnalyticsAndTrends />} */}
+          {activeTab === 'analytics' && <AnalyticsAndTrends />}
         </div>
       </div>
     </div>

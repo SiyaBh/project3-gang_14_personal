@@ -96,7 +96,7 @@ export default function EmployeeManagement() {
         <h3 style={{ color: colors.dark, marginTop: 0 }}>
           {isEdit ? 'Edit Employee' : 'Add New Employee'}
         </h3>
-        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '15px'}}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
           <input
             type="text"
             placeholder="Employee Name"
@@ -113,17 +113,6 @@ export default function EmployeeManagement() {
             placeholder="Role"
             value={formData.employee_role}
             onChange={(e) => setFormData({ ...formData, employee_role: e.target.value })}
-            style={{
-              padding: '10px',
-              borderRadius: '4px',
-              border: `1px solid ${colors.dark}`,
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Email"
-            value={formData.employee_email}
-            onChange={(e) => setFormData({ ...formData, employee_email: e.target.value })}
             style={{
               padding: '10px',
               borderRadius: '4px',
@@ -264,7 +253,6 @@ export default function EmployeeManagement() {
             <tr style={{ backgroundColor: colors.primary, color: colors.secondary }}>
               <th style={{ padding: '15px', textAlign: 'left' }}>Name</th>
               <th style={{ padding: '15px', textAlign: 'left' }}>Role</th>
-              <th style={{ padding: '15px', textAlign: 'left' }}>Email</th>
               <th style={{ padding: '15px', textAlign: 'center' }}>Actions</th>
             </tr>
           </thead>
@@ -279,7 +267,6 @@ export default function EmployeeManagement() {
               >
                 <td style={{ padding: '15px', color: colors.dark }}>{item.employee_name}</td>
                 <td style={{ padding: '15px', color: colors.dark }}>{item.employee_role}</td>
-                <td style={{ padding: '15px', color: colors.dark }}>{item.employee_email}</td>
                 <td style={{ padding: '15px', textAlign: 'center' }}>
                   <button
                     onClick={() => {
