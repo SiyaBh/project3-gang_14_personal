@@ -28,14 +28,24 @@ router.get('/details', async (req, res) => {
     }
 });
 
-// asks manager to insert a new employee 
+// Add a new employee
 router.post('/', async (req, res) => {
-    const { employee_name, employee_role } = req.body;
+    const { employee_name, employee_role, employee_email } = req.body;
+
     try {
-        const result = await pool.query(
-            'INSERT INTO employee (employee_name, employee_role) VALUES ($1, $2) RETURNING *',
-            [employee_name, employee_role]
+        // Get next employee_id
+        const idResult = await pool.query(
+            'SELECT COALESCE(MAX(employee_id), 0) + 1 AS next_id FROM employee'
         );
+        const nextId = idResult.rows[0].next_id;
+
+        const result = await pool.query(
+            `INSERT INTO employee (employee_id, employee_name, employee_role, employee_email)
+             VALUES ($1, $2, $3, $4)
+             RETURNING *`,
+            [nextId, employee_name, employee_role, employee_email]
+        );
+
         res.json(result.rows[0]);
     } catch (err) {
         console.error('Error adding employee:', err);
@@ -43,15 +53,19 @@ router.post('/', async (req, res) => {
     }
 });
 
+
 // update an employee by the employee id
 router.put('/:id', async (req, res) => {
-    const { employee_id } = req.params;
-    const { employee_name, employee_role } = req.body;
+    const { id } = req.params;
+    const { employee_name, employee_role, employee_email } = req.body;
     try {
         const result = await pool.query(
-            'UPDATE employee SET employee_name = $1, employee_role = $2 WHERE employee_id = $3 RETURNING *',
-            [employee_name, employee_role, employee_id]
+            'UPDATE employee SET employee_name = $1, employee_role = $2, employee_email = $3 WHERE employee_id = $4 RETURNING *',
+            [employee_name, employee_role, employee_email, id]
         );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Employee not found' });
+        }
         res.json(result.rows[0]);
     } catch (err) {
         console.error('Error updating employee:', err);
@@ -59,12 +73,19 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+
 // delete an employee based on id 
 router.delete('/:id', async (req, res) => {
-    const { employee_id } = req.params;
+    const { id } = req.params;
     try {
-        await pool.query('DELETE FROM employee WHERE employee_id = $1', [employee_id]);
-        res.json({ success: true });
+        const result = await pool.query(
+            'DELETE FROM employee WHERE employee_id = $1 RETURNING *',
+            [id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Employee not found' });
+        }
+        res.json({ message: 'Employee deleted successfully', employee: result.rows[0] });
     } catch (err) {
         console.error('Error deleting employee:', err);
         res.status(500).json({ error: 'Server error' });
