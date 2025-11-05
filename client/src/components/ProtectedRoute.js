@@ -1,18 +1,22 @@
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 export default function ProtectedRoute({ children, role }) {
   const { user } = useContext(AuthContext);
+  const currentLocation = useLocation(); 
 
   if (!user) {
     // If no user, redirect to login
     return <Navigate to="/login" replace />;
   }
 
-  if (role && user.role.toLowerCase() !== role.toLowerCase()) {
-    // If user role doesn't match, redirect to welcome
-    return <Navigate to="/" replace />;
+  const userRole = user.role.toLowerCase();
+  if (
+    userRole === "cashier" &&
+    currentLocation.pathname.startsWith("/manager")
+  ) {//this way manager can access cashier but cashier cannot access manager
+    return <Navigate to="/cashier" replace />;
   }
 
   return children;

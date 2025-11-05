@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import C_MenuCategoryTabs from "../../components/CashierMenu/C_MenuCategoryTabs";
 import C_MenuGrid from "../../components/CashierMenu/C_MenuGrid";
+import { AuthContext } from "../../context/AuthContext";
 import { menuItems } from "../../data/menuItems";
 import "../../styles/CashierDashboard.css";
 
 export default function CashierDashboard() {
   const [category, setCategory] = useState("Milk Teas");
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   const filteredMenu = menuItems.filter(
     (item) =>
       item.category === category &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div className="dashboard-container">
@@ -27,7 +36,7 @@ export default function CashierDashboard() {
 
         {/* Logout button */}
         <div className="mt-8">
-          <button className="logout-button">← Logout</button>
+          <button onClick={handleLogout} className="logout-button">← Logout</button>
         </div>
       </div>
     </div>

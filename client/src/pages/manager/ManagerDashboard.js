@@ -1,6 +1,8 @@
 // client/src/pages/manager/ManagerDashboard.js
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import DrinksList from '../../components/DrinksList';
+import { AuthContext } from "../../context/AuthContext";
 import IngredientsManagement from '../../components/IngredientsManagement';
 import EmployeeManagement from '../../components/EmployeeManagement';
 import AnalyticsAndTrends from '../../components/AnalyticsAndTrends';
@@ -13,6 +15,8 @@ const colors = {
 
 export default function ManagerDashboard() {
   const [activeTab, setActiveTab] = useState('menu');
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   const tabs = [
     { id: 'menu', label: 'Menu' },
@@ -20,6 +24,11 @@ export default function ManagerDashboard() {
     { id: 'employees', label: 'Employees' },
     { id: 'analytics', label: 'Analytics & Trends' },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div style={{
@@ -31,6 +40,7 @@ export default function ManagerDashboard() {
         maxWidth: '1400px',
         margin: '0 auto',
       }}>
+
         {/* Header */}
         <div style={{
           backgroundColor: colors.primary,
@@ -38,7 +48,46 @@ export default function ManagerDashboard() {
           borderRadius: '8px',
           marginBottom: '20px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          position: 'relative'
         }}>
+          {/* Cashier View Button */}
+          <button
+            onClick={() => navigate('/cashier')}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              backgroundColor: colors.secondary,
+              color: colors.primary,
+              border: 'none',
+              padding: '10px 16px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontSize: '14px',
+              transition: 'opacity 0.2s',
+            }}
+          >
+            Cashier Dashboard
+          </button>
+
+          <button
+            onClick={handleLogout}
+            style={{
+              backgroundColor: colors.dark,
+              color: colors.secondary,
+              border: 'none',
+              padding: '12px 20px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontSize: '16px',
+              transition: 'all 0.3s',
+            }}
+          >
+            Logout
+          </button>
+
           <h1 style={{
             color: colors.secondary,
             margin: 0,
@@ -95,9 +144,9 @@ export default function ManagerDashboard() {
           padding: '30px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         }}>
-          { activeTab === 'menu' && <DrinksList />}
+          {activeTab === 'menu' && <DrinksList />}
           {activeTab === 'ingredients' && <IngredientsManagement />}
-          { activeTab === 'employees' && <EmployeeManagement />}
+          {activeTab === 'employees' && <EmployeeManagement />}
           {activeTab === 'analytics' && <AnalyticsAndTrends />}
         </div>
       </div>
