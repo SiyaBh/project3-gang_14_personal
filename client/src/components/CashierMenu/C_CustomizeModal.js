@@ -15,7 +15,7 @@ export default function C_CustomizeModal({ item, onClose }) {
 
   return (
     <div className="customize-modal">
-      <h2 className="customize-title">{item.name}</h2>
+      <h2 className="customize-title">{item.product_name}</h2>
 
       <label className="customize-label">Size</label>
       <select
