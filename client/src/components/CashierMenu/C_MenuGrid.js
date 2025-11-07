@@ -11,7 +11,7 @@ export default function C_MenuGrid({ items = [] }) {
     <>
       {/* Menu grid */}
       <div className="menu-grid">
-        {items.map((item) => (
+        {Array.isArray(items) && items.map((item) => (
           <C_MenuItemCard
             key={item.id}
             item={item}

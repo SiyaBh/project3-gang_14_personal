@@ -24,7 +24,7 @@ export default function C_Customize({ item, onClose }) {
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-xl">
-      <h2 className="text-xl font-semibold mb-4">{item.name}</h2>
+      <h2 className="text-xl font-semibold mb-4">{item.product_name}</h2>
 
       {/* Example options */}
       <label>Size:</label>
