@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import "../../styles/C_CustomizeModal.css";
 
-export default function C_CustomizeModal({ item, onClose }) {
+export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
   // state for all current options
   const [options, setOptions] = useState({
     sugar: "100%",
@@ -132,22 +132,24 @@ export default function C_CustomizeModal({ item, onClose }) {
 const handleAdd = () => {
   // Create a copy of the item with options, total price, and quantity
   const customizedItem = {
-    ...item,
-    options: options,
-    totalPrice: Number(totalPrice),
-    quantity: 1,
+    name: item.product_name,           // drink name
+    category: item.product_type,   // drink type/category 
+    options: { ...options },   // sugar, ice, toppings, misc, temperature
+    totalPrice: Number(totalPrice), // total including extras
+    quantity: 1,               // default
   };
 
-  // Call the parent's onAddToOrder function
-  //onAddToOrder(customizedItem);
+  // Sends item to CashierDashboard
+  onAddToOrder(customizedItem);
 
   // Close the modal
   onClose();
 };
 
 return (
-  <div className="customize-modal">
-    <h2 className="modal-title">{item.name}</h2>
+  <div className="customize-modal-overlay">
+    <div className="customize-modal">
+    <h2 className="modal-title">{item.product_name}</h2>
     <p className="base-price">Base Price: ${item.price.toFixed(2)}</p>
 
     {/* Sugar Level */}
@@ -241,5 +243,7 @@ return (
       <button className="add-btn" onClick={handleAdd}>Add to Order</button>
     </div>
   </div>
+</div>
+  
 );
 }
