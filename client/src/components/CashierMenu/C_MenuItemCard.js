@@ -13,7 +13,7 @@ export default function C_MenuItemCard({ item, onSelect }) {
         className="menu-item-image"
       />
       <h3 className="menu-item-name">{item.product_name}</h3>
-      <p className="menu-item-price">${item.price.toFixed(2)}</p>
+      <p className="menu-item-price">${item.price}</p>
     </div>
   );
 }
