@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import C_MenuCategoryTabs from "../../components/CashierMenu/C_MenuCategoryTabs";
 import C_MenuGrid from "../../components/CashierMenu/C_MenuGrid";
 import { AuthContext } from "../../context/AuthContext";
-//import { menuItems } from "../../data/menuItems";
 import "../../styles/CashierDashboard.css";
 import { getDrinks } from '../../api/drinks';
 import { DebouncedKey } from '../../components/CashierMenu/Debouncing';
