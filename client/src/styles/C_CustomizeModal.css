@@ -1,80 +1,136 @@
+.customize-modal-overlay {
+  position: fixed;      
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3); 
+  backdrop-filter: blur(4px);      
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;        
+}
+
+/* Container for the modal */
 .customize-modal {
   background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  padding: 24px;
+  width: 80%;             
+  max-width: 1200px;       /* optional max width */
+  max-height: 70vh;       
+  overflow-y: auto;       
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1001;
 }
 
-/* Item title */
-.customize-title {
-  font-size: 1.25rem;
+/* Modal title */
+.modal-title {
+  font-size: 2rem; /* bigger text */
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 14px;
   text-align: center;
-  color: #3c2a21; /* matches your brown accent */
 }
 
-/* Labels */
-.customize-label {
+/* Base price display */
+.base-price {
+  font-size: 1.2rem; /* bigger text */
+  color: #555;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Each option section */
+.option-section {
+  margin-bottom: 24px; /* more spacing */
+}
+
+/* Label for option category */
+.option-label {
   display: block;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
   color: #333;
+  font-size: 1.1rem; /* slightly bigger text */
 }
 
-/* Dropdowns */
-.customize-select {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1.5px solid #ccc;
-  border-radius: 0.5rem;
-  background-color: #f9f9f9;
-  font-size: 0.95rem;
-  transition: border-color 0.2s;
-}
-
-.customize-select:focus {
-  outline: none;
-  border-color: #b43f3f; /* red accent */
-}
-
-/* Button row */
-.customize-buttons {
+/* Container for option buttons */
+.option-buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 14px; /* bigger gap for fingers */
+}
+
+/* Individual option button */
+.option-btn {
+  padding: 12px 20px; /* bigger for touch */
+  border: 1px solid #ccc;
+  border-radius: 24px; /* bigger and more rounded */
+  background-color: #f7f7f7;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem; /* bigger font */
+  color: #333;
+  min-width: 90px; /* ensures buttons aren’t too small */
+  text-align: center;
+}
+
+/* Hover effect for buttons (optional for touchscreen) */
+.option-btn:hover {
+  background-color: #eee;
+  border-color: #aaa;
+}
+
+/* Selected option button */
+.option-btn.selected {
+  background-color: #B43F3F; /* brown/red highlight */
+  color: #fff;
+  border-color: #B43F3F;
+}
+
+/* Total price section */
+.total-price {
+  font-size: 1.4rem; /* bigger for visibility */
+  font-weight: 700;
+  text-align: right;
+  margin-top: 16px;
+}
+
+/* Modal action buttons container */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px; /* more spacing */
+  margin-top: 28px;
 }
 
 /* Cancel button */
 .cancel-btn {
-  background-color: #e5e5e5;
-  color: #333;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
+  padding: 12px 24px; /* bigger */
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background-color: #f2f2f2;
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-size: 1rem;
 }
 
 .cancel-btn:hover {
-  background-color: #d6d6d6;
+  background-color: #e0e0e0;
 }
 
-/* Add to Order button */
+/* Add to order button */
 .add-btn {
-  background-color: #b43f3f; /* red accent */
-  color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 12px 24px;
+  border-radius: 20px;
   border: none;
-  border-radius: 0.5rem;
+  background-color: #B43F3F;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-size: 1rem;
 }
 
 .add-btn:hover {
-  background-color: #8f3232;
+  background-color: #8b2c2c;
 }

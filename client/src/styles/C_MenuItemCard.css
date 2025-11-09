@@ -1,20 +1,24 @@
 .menu-item-card {
+  width: 200px;         /* fixed width */
+  height: 260px;        /* fixed height */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  background-color: white; /* clear background */
-  border: 2px solid #B43F3F; /* red border */
-  border-radius: 1rem; /* rounded corners */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  justify-content: flex-start;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+  overflow: hidden;     /* prevent overflow */
+  border: 2px solid #B43F3F; /* red border */
 }
 
 .menu-item-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  color:#b43f3f15
 }
 
 .menu-item-image {
@@ -27,11 +31,14 @@
 .menu-item-name {
   font-weight: 600;
   text-align: center;
-  color: #333;
+  color:#020202;
   margin-bottom: 0.25rem;
 }
 
 .menu-item-price {
-  font-size: 0.875rem;
-  color: #555;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color:#020202;
+  margin-top: auto;  
 }

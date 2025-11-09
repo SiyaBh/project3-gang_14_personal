@@ -8,11 +8,11 @@ export default function C_MenuItemCard({ item, onSelect }) {
   return (
     <div className="menu-item-card" onClick={() => onSelect(item)}>
       <img
-        src={item.img || "/images/placeholder-drink.png"}
-        alt={item.name}
+        src={item.img || "/images/taro_milk_tea.png"}
+        alt={item.product_name}
         className="menu-item-image"
       />
-      <h3 className="menu-item-name">{item.name}</h3>
+      <h3 className="menu-item-name">{item.product_name}</h3>
       <p className="menu-item-price">${item.price.toFixed(2)}</p>
     </div>
   );

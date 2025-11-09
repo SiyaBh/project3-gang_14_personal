@@ -54,8 +54,11 @@ export default function DrinksManagement() {
     setError(null);
     updateDrink(updatedItem.product_name, updatedItem)
       .then(() => {
-        fetchDrinks();
+        setDrinks(prev => prev.map(d => 
+          d.product_name === updatedItem.product_name ? updatedItem : d
+        ));
         setEditingItem(null);
+        setLoading(false);
       })
       .catch((err) => {
         setError(err.message || 'Failed to update drink');

@@ -4,14 +4,14 @@ import C_CustomizeModal from "./C_CustomizeModal";
 import Modal from "../../Shared/Modal";
 import "../../styles/C_MenuGrid.css";
 
-export default function C_MenuGrid({ items = [] }) {
+export default function C_MenuGrid({ items = [], onAddToOrder}) {
   const [selectedItem, setSelectedItem] = useState(null);
 
   return (
     <>
       {/* Menu grid */}
       <div className="menu-grid">
-        {items.map((item) => (
+        {Array.isArray(items) && items.map((item) => (
           <C_MenuItemCard
             key={item.id}
             item={item}
@@ -27,6 +27,7 @@ export default function C_MenuGrid({ items = [] }) {
             <C_CustomizeModal
               item={selectedItem}
               onClose={() => setSelectedItem(null)}
+              onAddToOrder={onAddToOrder} // pass handler to add item to order
             />
           </div>
         )}
