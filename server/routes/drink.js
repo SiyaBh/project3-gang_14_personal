@@ -17,20 +17,37 @@ const pool = new Pool({
 
 
 // Get all drinks
+// router.get('/', async (req, res) => {
+//   try {
+//     const result = await pool.query(`SELECT
+//     product_name,
+//     MIN(product_type) AS product_type,
+//     MIN(price) AS price,
+//     MIN(season) AS season,
+//     MIN(available_months) AS available_months
+// FROM
+//     drink
+// GROUP BY
+//     product_name
+// ORDER BY
+//     product_name;`);
+//     res.json(result.rows); // rows is an array
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// });
+
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query(`SELECT
     product_name,
-    MIN(product_type) AS product_type,
-    MIN(price) AS price,
-    MIN(season) AS season,
-    MIN(available_months) AS available_months
+    product_type,
+    price,
+    season,
+    available_months
 FROM
-    drink
-GROUP BY
-    product_name
-ORDER BY
-    product_name;`);
+    menu;`);
     res.json(result.rows); // rows is an array
   } catch (err) {
     console.error(err);
@@ -40,11 +57,25 @@ ORDER BY
 
 
 // Add a new drink
+// router.post('/', async (req, res) => {
+//     const { product_name, price, product_type, season, available_months } = req.body;
+//     try {
+//         const result = await pool.query(
+//             'INSERT INTO drink (product_name, price, product_type, season, available_months) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+//             [product_name, price, product_type, season, available_months]
+//         );
+//         res.json(result.rows[0]);
+//     } catch (err) {
+//         console.error('Error adding drink:', err);
+//         res.status(500).json({ error: 'Server error' });
+//     }
+// });
+
 router.post('/', async (req, res) => {
     const { product_name, price, product_type, season, available_months } = req.body;
     try {
         const result = await pool.query(
-            'INSERT INTO drink (product_name, price, product_type, season, available_months) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            'INSERT INTO menu (product_name, price, product_type, season, available_months) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [product_name, price, product_type, season, available_months]
         );
         res.json(result.rows[0]);
@@ -55,13 +86,44 @@ router.post('/', async (req, res) => {
 });
 
 // Update all drinks by product_name and adjust customizations
+// router.put('/:product_name', async (req, res) => {
+//     const { product_name } = req.params;
+//     const { price, product_type, season, available_months } = req.body;
+
+//     try {
+//         const result = await pool.query(
+//             `UPDATE drink 
+//              SET price = $1, 
+//                  product_type = $2, 
+//                  season = $3, 
+//                  available_months = $4
+//              WHERE product_name = $5
+//              RETURNING *`,
+//             [price, product_type, season, available_months, product_name]
+//         );
+
+//         if (result.rowCount === 0) {
+//             return res.status(404).json({ error: 'Drink not found' });
+//         }
+
+//         res.json({
+//             message: `Updated ${result.rowCount} drink(s) with name "${product_name}".`,
+//             updatedDrinks: result.rows
+//         });
+
+//     } catch (err) {
+//         console.error('Error updating drink:', err);
+//         res.status(500).json({ error: 'Server error' });
+//     }
+// });
+
 router.put('/:product_name', async (req, res) => {
     const { product_name } = req.params;
     const { price, product_type, season, available_months } = req.body;
 
     try {
         const result = await pool.query(
-            `UPDATE drink 
+            `UPDATE menu 
              SET price = $1, 
                  product_type = $2, 
                  season = $3, 
@@ -88,12 +150,35 @@ router.put('/:product_name', async (req, res) => {
 
 
 // Delete all drinks with the same product_name
+// router.delete('/:product_name', async (req, res) => {
+//     const { product_name } = req.params;
+
+//     try {
+//         const result = await pool.query(
+//             'DELETE FROM drink WHERE product_name = $1 RETURNING *',
+//             [product_name]
+//         );
+
+//         if (result.rowCount === 0) {
+//             return res.status(404).json({ error: 'No drinks found with that name' });
+//         }
+
+//         res.json({
+//             message: `Deleted ${result.rowCount} drink(s) with name "${product_name}".`,
+//             deletedDrinks: result.rows
+//         });
+//     } catch (err) {
+//         console.error('Error deleting drink:', err);
+//         res.status(500).json({ error: 'Server error' });
+//     }
+// });
+
 router.delete('/:product_name', async (req, res) => {
     const { product_name } = req.params;
 
     try {
         const result = await pool.query(
-            'DELETE FROM drink WHERE product_name = $1 RETURNING *',
+            'DELETE FROM menu WHERE product_name = $1 RETURNING *',
             [product_name]
         );
 
