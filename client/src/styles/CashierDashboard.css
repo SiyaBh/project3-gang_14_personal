@@ -1,16 +1,20 @@
-/* Container for the whole page */
 .dashboard-container {
   display: flex;
-  height: 100vh;
-  background-color: #18181b;
-  color: black;
+  flex-direction: row;
+  height: 100vh; /* full height */
+  overflow: hidden;
 }
 
-/* Left section */
 .left-section {
-  flex: 1;
-  background-color: rgb(205, 177, 177);
-  padding: 2.5rem; 
+  flex: 1; /* menu section takes remaining space */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.right-section {
+  width: 400px; /* fixed width for order panel */
+  padding: 20px;
+  background-color: #f9f9f9;
   overflow-y: auto;
 }
 
@@ -19,6 +23,12 @@
   font-size:xx-large;
   font-weight: 600;    
   margin-bottom: 1.5rem; 
+}
+
+.logout-container {
+  position: absolute;
+  bottom: 20px; 
+  left: 20px;  
 }
 
 /* Logout button */
@@ -31,6 +41,8 @@
   padding: 0.5rem 1.25rem; 
   border-radius: 9999px; 
   transition: background-color 0.2s;
+  font-family: 'Poppins', sans-serif; 
+  font-size: 1rem;
 }
 
 .logout-button:hover {
