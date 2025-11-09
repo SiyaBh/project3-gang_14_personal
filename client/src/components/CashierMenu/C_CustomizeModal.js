@@ -1,63 +1,245 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import "../../styles/C_CustomizeModal.css";
 
 export default function C_CustomizeModal({ item, onClose }) {
+  // state for all current options
   const [options, setOptions] = useState({
-    size: "Medium",
     sugar: "100%",
     ice: "Regular",
+    toppings: [],
+    misc: [],
+    temperature: "Cold",
   });
 
-  const handleAdd = () => {
-    // Example: addToOrder({ ...item, options, quantity: 1 });
-    onClose();
+  const sugarLevels = ["0%", "30%", "50%", "80%", "100%", "120%"];
+  const iceLevels = ["None", "Less", "Regular", "More"];
+  const toppingOptions = [
+    { name: "Regular Pearl", price: 0.75 },
+    { name: "Lychee Jelly", price: 0.75 },
+    { name: "Pudding", price: 0.75 },
+    { name: "Herb Jelly", price: 0.75 },
+    { name: "Ice Cream", price: 0.75 },
+    { name: "Mini Pearls", price: 0.75 },
+    { name: "Aiyu Jelly", price: 0.75 },
+    { name: "Creama", price: 0.75 },
+    { name: "Crystal Boba", price: 0.75 },
+    { name: "Mango Popping ", price: 0.75 },
+    { name: "Strawberry Popping", price: 0.75 },
+    { name: "Cofeee Jelly", price: 0.75 },
+    { name: "Honey Jelly", price: 0.75 },
+    { name: "Peach Popping", price: 0.75 },
+    { name: "Fresh Milk", price: 0.75 }
+  ];
+  const miscOptions = [
+  { name: "Double Toppings", price: 0.75 },
+  { name: "Triple Toppings", price: 0.75 },
+  { name: "Double Creama", price: 0.75 },
+  { name: "Split", price: 0.75 },
+  { name: "No Toppings", price: 0.00 },
+  { name: "Sub Pearls", price: 0.00}
+  ];
+  const temperatureOptions = ["Cold", "Hot"];
+
+  // function handles selection and deseelection of toppings
+  // when you click on a topping, if it's not already in the toppings array
+
+  const handleSelect =  (key, value, isMulti = false) => {
+    setOptions((prev) => {
+      if (isMulti) {
+        // If it's a multi-select (like toppings), toggle the value in the array
+        // ex: key = toppings, value = "Regular Pearl"
+        // checks to see if the selected option is already in the state array
+        const isSelected = prev[key].includes(value);
+
+        // Use this variable to store the updated array of selected options
+        let updatedKeyArray;
+
+        if (isSelected) {
+          // If it's already selected, REMOVE it
+          // The filter function goes through every element (v) in prev[key]
+          // and keeps only the ones that are NOT equal to the current value
+          updatedKeyArray = prev[key].filter((v) => v !== value);
+        } else {
+          // If the option was not selected, we ADD it to the array
+          // The spread operator (...) creates a copy of the previous array
+          // Then we append the new value at the end
+          updatedKeyArray = [...prev[key], value];
+        }
+        // Return a new version of the entire options object
+        // We spread all the previous keys (...prev)
+        // and update only the one we modified (the one at "key")
+        return {
+          ...prev,
+          [key]: updatedKeyArray,
+        };  
+        // For single select, we just replace the old value with the new one
+        // Create a new options object, copy everything from the old one, 
+        // and update just the field named by key to the new value.
+      } else {
+        return {
+          ...prev,
+          [key]: value,
+        };
+      }
+    });
   };
 
-  return (
-    <div className="customize-modal">
-      <h2 className="customize-title">{item.product_name}</h2>
+    // Compute total price dynamically
+    const totalPrice = useMemo(() => {
+      let total = item.price; // base drink price
 
-      <label className="customize-label">Size</label>
-      <select
-        className="customize-select"
-        value={options.size}
-        onChange={(e) => setOptions({ ...options, size: e.target.value })}
-      >
-        <option>Small</option>
-        <option>Medium</option>
-        <option>Large</option>
-      </select>
+      // Add price for each selected topping
+      for (let i = 0; i < options.toppings.length; i++) {
+        const toppingName = options.toppings[i];
+        let found = null;
 
-      <label className="customize-label">Sugar Level</label>
-      <select
-        className="customize-select"
-        value={options.sugar}
-        onChange={(e) => setOptions({ ...options, sugar: e.target.value })}
-      >
-        <option>0%</option>
-        <option>50%</option>
-        <option>100%</option>
-      </select>
+        // Find topping in the options list
+        for (let j = 0; j < toppingOptions.length; j++) {
+          if(toppingOptions[j].name === toppingName) {
+            found = toppingOptions[j];
+            break;
+          }
+        }
+        // If found, add its price to total
+        if (found !== null) {
+          total += found.price;
+        }
+      }
 
-      <label className="customize-label">Ice Level</label>
-      <select
-        className="customize-select"
-        value={options.ice}
-        onChange={(e) => setOptions({ ...options, ice: e.target.value })}
-      >
-        <option>None</option>
-        <option>Less</option>
-        <option>Regular</option>
-      </select>
+      // Add prices for selected misc options
+      for (let i = 0; i < options.misc.length; i++) {
+        const miscName = options.misc[i];
+        let found = null;
 
-      <div className="customize-buttons">
-        <button onClick={onClose} className="cancel-btn">
-          Cancel
-        </button>
-        <button onClick={handleAdd} className="add-btn">
-          Add to Order
-        </button>
+        // Find the misc option object in miscOptions array
+        for (let j = 0; j < miscOptions.length; j++) {
+          if (miscOptions[j].name === miscName) {
+            found = miscOptions[j];
+            break;
+          }
+        }
+
+        // If found, add its price to total
+        if (found !== null) {
+          total += found.price;
+        }
+      }
+      // Return total as a string with 2 decimals
+      return total.toFixed(2);
+    }, [options, item.price, toppingOptions, miscOptions]);
+
+// Add customized item to order
+const handleAdd = () => {
+  // Create a copy of the item with options, total price, and quantity
+  const customizedItem = {
+    ...item,
+    options: options,
+    totalPrice: Number(totalPrice),
+    quantity: 1,
+  };
+
+  // Call the parent's onAddToOrder function
+  //onAddToOrder(customizedItem);
+
+  // Close the modal
+  onClose();
+};
+
+return (
+  <div className="customize-modal">
+    <h2 className="modal-title">{item.name}</h2>
+    <p className="base-price">Base Price: ${item.price.toFixed(2)}</p>
+
+    {/* Sugar Level */}
+    <div className="option-section">
+      <label className="option-label">Sugar Level</label>
+      <div className="option-buttons">
+        {sugarLevels.map((level) => (
+          <button
+            key={level}
+            className={`option-btn ${options.sugar === level ? "selected" : ""}`}
+            onClick={() => handleSelect("sugar", level)}
+          >
+            {level}
+          </button>
+        ))}
       </div>
     </div>
-  );
+
+    {/* Ice Level */}
+    <div className="option-section">
+      <label className="option-label">Ice Level</label>
+      <div className="option-buttons">
+        {iceLevels.map((level) => (
+          <button
+            key={level}
+            className={`option-btn ${options.ice === level ? "selected" : ""}`}
+            onClick={() => handleSelect("ice", level)}
+          >
+            {level}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Toppings (multi-select) */}
+    <div className="option-section">
+      <label className="option-label">Toppings</label>
+      <div className="option-buttons">
+        {toppingOptions.map((top) => (
+          <button
+            key={top.name}
+            className={`option-btn ${options.toppings.includes(top.name) ? "selected" : ""}`}
+            onClick={() => handleSelect("toppings", top.name, true)}
+          >
+            {top.name} (+${top.price.toFixed(2)})
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Misc Options (multi-select) */}
+    <div className="option-section">
+      <label className="option-label">Misc Options</label>
+      <div className="option-buttons">
+        {miscOptions.map((opt) => (
+          <button
+            key={opt.name}
+            className={`option-btn ${options.misc.includes(opt.name) ? "selected" : ""}`}
+            onClick={() => handleSelect("misc", opt.name, true)}
+          >
+            {opt.name} (+${opt.price.toFixed(2)})
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Temperature */}
+    <div className="option-section">
+      <label className="option-label">Temperature</label>
+      <div className="option-buttons">
+        {temperatureOptions.map((temp) => (
+          <button
+            key={temp}
+            className={`option-btn ${options.temperature === temp ? "selected" : ""}`}
+            onClick={() => handleSelect("temperature", temp)}
+          >
+            {temp}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Total Price */}
+    <div className="total-price">
+      <strong>Total: ${totalPrice}</strong>
+    </div>
+
+    {/* Action Buttons */}
+    <div className="modal-actions">
+      <button className="cancel-btn" onClick={onClose}>Cancel</button>
+      <button className="add-btn" onClick={handleAdd}>Add to Order</button>
+    </div>
+  </div>
+);
 }
