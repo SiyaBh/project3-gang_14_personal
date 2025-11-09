@@ -1,3 +1,4 @@
+
 SCRUM Meeting 2 for ProjectName
 Prepared by: Siya Bhatkal
 Meeting Date: 11/5/2025
@@ -53,3 +54,58 @@ Siya
 Work on an issues the manager dashboard is encountering
 Ananya
 
+=======
+SCRUM Meeting 2 for ProjectName
+Prepared by: Siya Bhatkal
+Meeting Date: 11/5/2025
+Meeting Attendees
+ Ananya Adiki
+ Siya Bhatkal
+ Marisol Moreno
+ Renee Gunukula
+Meeting Agenda Items
+ Discuss what each team member has completed
+Update product backlog and sprint backlog
+
+Status Update Since Last Meeting
+Accomplishments:
+ Marisol -  Made Progress on the cashier dashboard. She is using a dummy data to create her frontend page 
+Ananya - Worked on google authentication. She also fixed the ingredient and employee routes because we had issues connecting it to the database
+Siya - Worked on creating the routes and added the functionalities for the task and analytics page
+Renee - Worked on the Weather API
+
+Tasks Completed:
+Task Description
+Assigned to
+Completed? (yes/no)
+Cashier Dashboard
+Marisol
+yes
+Google Authentication
+Ananya
+yes
+Weather widget 
+Renee
+yes
+Task and  analytics 
+Siya
+Yes
+
+Before The Next Meeting
+Plans:
+ Marisol - finish the cashier ui and add a welcome page
+Ananya - Work on an issues the manager dashboard is encountering
+Siya - Work on an issues the manager dashboard is encountering
+Renee - Connect the backend with the cashier view 
+
+Task Assignments:
+Task Description
+Assigned to
+Connect the backend with the cashier view 
+Renee
+finish the cashier ui and add a welcome page
+Marisol
+Work on an issues the manager dashboard is encountering
+Siya
+Work on an issues the manager dashboard is encountering
+Ananya

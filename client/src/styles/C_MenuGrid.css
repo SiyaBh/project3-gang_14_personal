@@ -1,13 +1,7 @@
 /* Grid container for all menu items */
 .menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* flexible grid */
-  gap: 1.5rem; /* space between cards */
-  margin-top: 2rem;
-  align-items: start;
-}
-
-/* Optional: make sure grid doesn’t stretch weirdly */
-.menu-grid > * {
-  justify-self: center;
+  display: flex;
+  flex-wrap: wrap;      /* wrap cards to next line */
+  gap: 16px;            /* consistent spacing between cards */
+  justify-content: flex-start; /* align left */
 }

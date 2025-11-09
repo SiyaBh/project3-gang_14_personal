@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import C_MenuCategoryTabs from "../../components/CashierMenu/C_MenuCategoryTabs";
 import C_MenuGrid from "../../components/CashierMenu/C_MenuGrid";
 import { AuthContext } from "../../context/AuthContext";
-//import { menuItems } from "../../data/menuItems";
 import "../../styles/CashierDashboard.css";
 import { getDrinks } from '../../api/drinks';
 import { DebouncedKey } from '../../components/CashierMenu/Debouncing';
+import C_OrderPanel from "../../components/CashierMenu/C_OrderPanel";
 
 export default function CashierDashboard() {
   const [category, setCategory] = useState("Milk Tea"); 
@@ -52,29 +52,60 @@ export default function CashierDashboard() {
     navigate("/");
   };
 
+  // Order state and handlers
+
+  // State to store all items added to the current order
+  const [orderItems, setOrderItems] = useState([]);
+
+  // Adds a new customized drink to the current order
+  const handleAddToOrder = (customizedItem) => {
+    // Update the orderItems state by creating a new array
+    // Copy all previous items and append the new item
+    setOrderItems((prev) => {
+      const newOrder = [...prev, customizedItem];
+      return newOrder;
+    });
+  };
+
+  // Clears current order or could be extended to send order to backend
+  const handleCheckout = () => {
+    console.log("Checkout items:", orderItems);
+    // TODO: Send orderItems to backend for processing
+    setOrderItems([]); // Clear order after checkout
+  };
+
+
   
 
   return (
     <div className="dashboard-container">
+      {/* Left section: Menu */}
       <div className="left-section">
         <h1 className="dashboard-header">Cashier Dashboard</h1>
-        <input type="search" 
-        placeholder="Search drinks..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{padding: "8px", width: "786px", borderRadius: "20px", marginBottom: "20px", border: "2px solid grey"}}
-        ></input>
-
-        {/* Tabs */}
+        <input
+          type="search"
+          placeholder="Search drinks..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{
+            padding: "8px",
+            width: "786px",
+            borderRadius: "20px",
+            marginBottom: "20px",
+            border: "2px solid grey",
+            fontFamily: "'Poppins', sans-serif", 
+          }}
+        />
         <C_MenuCategoryTabs selected={category} onSelect={setCategory} />
-
-        {/* Grid */}
-        <C_MenuGrid items = {filteredMenu} />
-
-        {/* Logout button */}
-        <div className="mt-8">
+        <C_MenuGrid items={filteredMenu} onAddToOrder={handleAddToOrder} />
+        <div className="logout-container">
           <button onClick={handleLogout} className="logout-button">← Logout</button>
         </div>
+      </div>
+
+      {/* Right section: Order Panel */}
+      <div className="right-section">
+        <C_OrderPanel orderItems={orderItems} onCheckout={handleCheckout} setOrderItems={setOrderItems} />
       </div>
     </div>
   );
