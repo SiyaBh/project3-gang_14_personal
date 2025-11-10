@@ -86,7 +86,7 @@ export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
 
     // Compute total price dynamically
     const totalPrice = useMemo(() => {
-      let total = item.price; // base drink price
+      let total = Number(item.price) || 0; // base drink price
 
       // Add price for each selected topping
       for (let i = 0; i < options.toppings.length; i++) {
@@ -150,7 +150,7 @@ return (
   <div className="customize-modal-overlay">
     <div className="customize-modal">
     <h2 className="modal-title">{item.product_name}</h2>
-    <p className="base-price">Base Price: ${item.price.toFixed(2)}</p>
+    <p className="base-price">Base Price: ${item.price}</p>
 
     {/* Sugar Level */}
     <div className="option-section">
@@ -194,7 +194,7 @@ return (
             className={`option-btn ${options.toppings.includes(top.name) ? "selected" : ""}`}
             onClick={() => handleSelect("toppings", top.name, true)}
           >
-            {top.name} (+${top.price.toFixed(2)})
+            {top.name} (+${top.price})
           </button>
         ))}
       </div>
@@ -210,7 +210,7 @@ return (
             className={`option-btn ${options.misc.includes(opt.name) ? "selected" : ""}`}
             onClick={() => handleSelect("misc", opt.name, true)}
           >
-            {opt.name} (+${opt.price.toFixed(2)})
+            {opt.name} (+${opt.price})
           </button>
         ))}
       </div>
