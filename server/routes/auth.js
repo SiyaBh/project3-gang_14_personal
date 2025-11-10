@@ -30,7 +30,7 @@ router.post("/google", async (req, res) => {
 
         // Lookup employee by email
         const result = await pool.query(
-            "SELECT employee_id, employee_name, employee_role FROM employee WHERE employee_email = $1",
+            "SELECT employee_id, employee_name, employee_role FROM employee WHERE LOWER(employee_email) = LOWER($1)",
             [email]
         );
 
