@@ -13,6 +13,10 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
+pool.on('connect', (client) => {
+  client.query(`SET TIME ZONE 'America/Chicago'`);
+});
+
 
 // Get all orders with drinks 
 router.get('/', async (req, res) => {
