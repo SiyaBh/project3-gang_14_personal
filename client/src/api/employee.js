@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/api/employee';
+const BASE_URL = `${process.env.REACT_APP_SERVER_URL}/api/employee`;
 
 export const getEmployees = () => axios.get(`${BASE_URL}/details`).then((res) => res.data);
 export const addEmployee = (employee) => axios.post(BASE_URL, employee);

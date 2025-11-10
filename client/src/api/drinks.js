@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/api/drinks';
+const BASE_URL = `${process.env.REACT_APP_SERVER_URL}/api/drinks`;
 
 
 export const getDrinks = () => axios.get(BASE_URL).then((res) => res.data); // ensures we get an array

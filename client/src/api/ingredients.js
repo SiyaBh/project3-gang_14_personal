@@ -1,7 +1,7 @@
 // client/src/api/ingredients.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/api/ingredients';
+const BASE_URL = `${process.env.REACT_APP_SERVER_URL}/api/ingredients`;
 
 export const getIngredients = () => axios.get(BASE_URL).then((res) => res.data);
 export const addIngredient = (ingredient) => axios.post(BASE_URL, ingredient);
