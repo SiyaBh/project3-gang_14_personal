@@ -25,7 +25,14 @@ export default function CashierDashboard() {
     }
 
     return allDrinks.filter( //menuItems is the "array"
-      (item) => item.product_type === category
+      //(item) => item.product_type === category
+      (item) => {
+        if(item.season === category) {
+          return true;
+        } else if(item.season === "Year-Round"){
+          return item.product_type === category;
+        }
+      }
     );
   }, [allDrinks, category, debouncedSearch]);
 
@@ -87,7 +94,7 @@ export default function CashierDashboard() {
       console.error("Checkout failed:", err);
     }
 
-    //setOrderItems([]); // Clear order after checkout
+    setOrderItems([]); // Clear order after checkout
   };
 
 
