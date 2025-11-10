@@ -38,67 +38,110 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
-  const { employee_id, drinks } = req.body; 
 
-  if (!drinks || drinks.length === 0) {
-    return res.status(400).json({ error: 'No drinks in order' });
+//need to get employee id (nullable) and add it to order table but that can be a later problem maybe
+router.post('/', async (req, res) => {
+  //const { employee_id, drinks } = req.body; 
+  //const orderItems = req.body;
+  const orderItems = Array.isArray(req.body) ? req.body : req.body?.items;
+
+  if (!Array.isArray(orderItems) || orderItems.length === 0) {
+    return res.status(400).json({ error: "No items in order" });
   }
 
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
 
-    
-    let totalPrice = 0;
-    const drinkItems = []; 
+    const productIds = [];
+    let orderTotal = 0
 
-    for (let item of drinks) {
-      const drinkRes = await client.query(
-        'SELECT price FROM drink WHERE product_id = $1', 
-        [item.product_id]
+    for (const item of orderItems) {
+      const {
+        name,
+        category,
+        quantity,
+        totalPrice,
+        options
+      } = item;
+
+      //gets the menu id foreign key
+      const menuResult = await client.query(
+        `SELECT menu_id 
+          FROM menu 
+          WHERE LOWER(product_name) = LOWER($1)`, 
+        [name]
       );
-      
-      if (drinkRes.rows.length === 0) {
-        throw new Error(`Drink ${item.product_id} not found`);
+      const menuIDFK = menuResult.rows[0]?.menu_id ?? null;
+
+      orderTotal += parseFloat(totalPrice);
+
+      const iceMap = { None: 0, Less: 50, Regular: 100, More: 125 };
+      const sugarMap = { "0%": 0, "30%": 30, "50%": 50, "80%": 80, "100%": 100, "120%": 120 };
+      const temperatureMap = { Hot: true, Cold: false };
+
+      const iceLevel = iceMap[options?.ice] ?? null;
+      const sweetnessLevel = sugarMap[options?.sugar] ?? null;
+      const isHot = temperatureMap[options?.temperature] ?? null;
+
+      //insert customization here first
+      const customResult = await client.query(
+        `INSERT INTO customization
+          (ice_level, sweetness, hot_cold, toppings, miscellaneous)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING custom_id`,
+        [
+          iceLevel,
+          sweetnessLevel,
+          isHot,
+          options?.toppings ? options.toppings.join(", ") : null,
+          options?.misc ? options.misc.join(", ") : null,
+        ]
+      )
+      const customId = customResult.rows[0].custom_id;
+
+      // Insert into drinks (or drinks table, depending on schema)
+      for(let i = 0; i < quantity; i++) {
+        const productRresult = await client.query(
+          `INSERT INTO drink
+            (product_name, price, product_type, custom_id, menu_id_fk)
+          VALUES ($1, $2, $3, $4, $5)
+          RETURNING product_id`,
+          [
+            name,
+            totalPrice,
+            category,
+            customId,
+            menuIDFK
+          ]
+        );
+        const productId = productRresult.rows[0].product_id;
+        productIds.push(productId);
       }
-      
-      const drinkPrice = parseFloat(drinkRes.rows[0].price);
-      totalPrice += drinkPrice * item.quantity;
-      
-      // Store for later
-      drinkItems.push({
-        product_id: item.product_id,
-        quantity: item.quantity,
-        price: drinkPrice
-      });
     }
 
-    // Insert order
-    const orderRes = await client.query(
+    //insert order is now done (employee_id is nullable) -- ***still need to find a way to get employee_id
+    const employee_id = null; //TODO
+    const orderResult = await client.query( 
       `INSERT INTO orders (employee_id, total_order_price, order_date, order_time) 
        VALUES ($1, $2, CURRENT_DATE, CURRENT_TIME) 
-       RETURNING *`,
-      [employee_id, totalPrice]
+       RETURNING order_id`,
+      [employee_id, orderTotal]
     );
-    const orderId = orderRes.rows[0].order_id;
+    const orderId = orderResult.rows[0].order_id;
 
-    // Insert each drink into order_drink (one row per drink instance)
-    for (let item of drinkItems) {
-      // Insert one row for each quantity
-      for (let i = 0; i < item.quantity; i++) {
-        await client.query(
-          'INSERT INTO order_drink (order_id, product_id, price) VALUES ($1, $2, $3)',
-          [orderId, item.product_id, item.price]
-        );
-      }
+    for(const pid of productIds) {
+      await client.query(
+        'INSERT INTO order_drink (order_id, product_id) VALUES ($1, $2)',
+        [orderId, pid]
+      );
     }
 
     await client.query('COMMIT');
     res.json({ 
       message: 'Order created successfully', 
       order_id: orderId,
-      total_price: totalPrice 
+      total_price: orderTotal 
     });
   } catch (err) {
     await client.query('ROLLBACK');

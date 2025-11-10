@@ -68,10 +68,26 @@ export default function CashierDashboard() {
   };
 
   // Clears current order and updates database
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     console.log("Checkout items:", orderItems);
     // TODO: Send orderItems to backend for processing
-    setOrderItems([]); // Clear order after checkout
+
+    try {
+      const res = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderItems), // << send the array, not { items: ... }
+        credentials: "include"
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      console.log("Order created:", data);
+      setOrderItems([]);
+    } catch (err) {
+      console.error("Checkout failed:", err);
+    }
+
+    //setOrderItems([]); // Clear order after checkout
   };
 
 
