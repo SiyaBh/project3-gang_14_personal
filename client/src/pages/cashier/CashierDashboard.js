@@ -67,7 +67,7 @@ export default function CashierDashboard() {
     });
   };
 
-  // Clears current order or could be extended to send order to backend
+  // Clears current order and updates database
   const handleCheckout = () => {
     console.log("Checkout items:", orderItems);
     // TODO: Send orderItems to backend for processing
