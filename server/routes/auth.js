@@ -26,7 +26,8 @@ router.post("/google", async (req, res) => {
 
         const payload = ticket.getPayload();
         const email = payload.email;
-        const name = payload.name;
+        console.log("Google returned email:", email);
+
 
         // Lookup employee by email
         const result = await pool.query(
