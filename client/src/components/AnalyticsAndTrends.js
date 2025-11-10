@@ -50,24 +50,41 @@ const TrendsAndAnalytics = () => {
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
 
   const renderBarChart = (data, xKey, yKey, title, fill, yLabel) => (
-    <div className="mb-10">
-      <h2 className="text-xl font-semibold text-center mb-4">{title}</h2>
-      {data.length > 0 ? (
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 60 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey={xKey} angle={-30} textAnchor="end" interval={0} height={60} />
-            <YAxis label={{ value: yLabel, angle: -90, position: 'insideLeft' }} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey={yKey} fill={fill} maxBarSize={60} />
-          </BarChart>
-        </ResponsiveContainer>
-      ) : (
-        <p className="text-center text-gray-500">No data available.</p>
-      )}
-    </div>
+  <div className="mb-10">
+    <h2 className="text-xl font-semibold text-center mb-4">{title}</h2>
+    {data.length > 0 ? (
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 60 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis
+            dataKey={xKey}
+            angle={-30}
+            textAnchor="end"
+            interval={0}
+            height={60}
+            tickFormatter={(hour) => {
+              const h = parseInt(hour);
+              if (xKey === "hour") { 
+                if (h === 0) return "12 AM";
+                if (h < 12) return `${h} AM`;
+                if (h === 12) return "12 PM";
+                return `${h - 12} PM`;
+              }
+              return hour; 
+            }}
+          />
+          <YAxis label={{ value: yLabel, angle: -90, position: 'insideLeft' }} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey={yKey} fill={fill} maxBarSize={60} />
+        </BarChart>
+      </ResponsiveContainer>
+    ) : (
+      <p className="text-center text-gray-500">No data available.</p>
+    )}
+  </div>
   );
+
 
   const getSelectedChart = () => {
     switch (selectedChart) {
