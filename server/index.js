@@ -1,12 +1,15 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
-const port = 3001; // usually server is 3001, React runs on 3000
+const port = process.env.PORT || 3001;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// API routes
 const employeeRouter = require('./routes/employee');
 const ingredientRouter = require('./routes/ingredients');
 const drinkRouter = require('./routes/drink');
@@ -21,9 +24,13 @@ app.use('/api/order', orderRouter);
 app.use('/api/trends', trendsRouter);
 app.use('/auth', authRoutes);
 
+// Serve React frontend
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
-
-
+// Start server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
