@@ -10,6 +10,10 @@ const pool = new Pool({
   password: process.env.PSQL_PASSWORD,
   port: process.env.PSQL_PORT
 });
+pool.on('connect', (client) => {
+  client.query(`SET TIME ZONE 'America/Chicago'`);
+});
+
 
 
 router.get('/', async (req, res) => {
@@ -40,10 +44,11 @@ router.get('/x-report', async (req, res) => {
              COUNT(o.order_id) AS total_orders
       FROM orders o
       WHERE o.order_date = CURRENT_DATE
-        AND o.order_time BETWEEN TIME '11:00' AND TIME '22:59:59.999999'
+        AND o.order_time BETWEEN TIME  '11:00:00.13192-06' AND TIME '22:59:59.13192-06'
       GROUP BY hour
       ORDER BY hour;
     `);
+    
 
     const data = result.rows.map(r => ({
       hour: r.hour,
