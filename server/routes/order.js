@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
       );
       const menuIDFK = menuResult.rows[0]?.menu_id ?? null;
 
-      orderTotal += parseFloat(totalPrice);
+      orderTotal += parseFloat(totalPrice)* quantity;
 
       const iceMap = { None: 0, Less: 50, Regular: 100, More: 125 };
       const sugarMap = { "0%": 0, "30%": 30, "50%": 50, "80%": 80, "100%": 100, "120%": 120 };
