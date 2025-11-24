@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/C_OrderPanel.css";
+import T from "../T";
 
 
 export default function C_OrderPanel({ orderItems = [], onCheckout, setOrderItems}) {
@@ -46,13 +47,13 @@ export default function C_OrderPanel({ orderItems = [], onCheckout, setOrderItem
     return (
     <div className="order-panel">
       {/* Panel title */}
-      <h2 className="order-title">Current Order</h2>
+      <h2 className="order-title"><T text = "Current Order"/></h2>
 
       {/* Container for all order items */}
       <div className="order-items">
         {/* Check if there are any items */}
         {orderItems.length === 0 && 
-          <p className="empty-text">No items added yet</p>
+          <p className="empty-text"> <T text = "No items added yet"/></p>
         }
 
         {/* Loop through order items and render each */}
@@ -93,8 +94,8 @@ export default function C_OrderPanel({ orderItems = [], onCheckout, setOrderItem
               elements.push(
                 <div key={i} className="order-item">
                 <div className="item-left">
-                    <p className="item-name">{item.name}</p>
-                    <p className="item-options">{optionsText}</p>
+                    <p className="item-name"><T text = {item.name}/></p>
+                    <p className="item-options"><T text = {optionsText}/></p>
                 </div>
                 <div className="item-right">
                     {/* Price at top */}
@@ -122,7 +123,7 @@ export default function C_OrderPanel({ orderItems = [], onCheckout, setOrderItem
           <span>${total.toFixed(2)}</span>
         </div>
         <button className="checkout-btn" onClick={onCheckout}>
-          Checkout
+          <T text = "Checkout"/>
         </button>
       </div>
     </div>

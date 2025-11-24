@@ -1,0 +1,120 @@
+/* -----------------------------
+   Base Layout
+------------------------------*/
+.welcome-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.welcome-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* -----------------------------
+   Header
+------------------------------*/
+.header {
+  background-color: #BF1834; /* primary */
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  color: #FFFFFF; /* secondary */
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+}
+
+
+.header-button,
+.start-kiosk {
+  background-color: #FFFFFF;
+  color: #BF1834;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+
+.enter_the_self_checkout_kiosk {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 15px;          
+  margin-top: 60px;   
+}
+
+.name-input {
+  width: 250px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.start-kiosk {
+  width: 220px;
+  margin-top: 10px;
+  background-color: #000000;
+  color: #f5f5f5;
+}
+
+
+.weather-container {
+  margin-top: 80px; 
+  display: flex;
+  justify-content: center;
+}
+
+/* -----------------------------
+   ACCESSIBILITY MODE
+------------------------------*/
+.accessible .header {
+  background-color: #000000 !important;       /* high contrast */
+}
+
+.accessible .header-title {
+  color: #FFFF00 !important;                  /* bright yellow */
+  font-size: 40px !important;                 /* larger text */
+}
+
+.accessible .header-button,
+.accessible .start-kiosk {
+  background-color: #FFFF00 !important;
+  color: #000000 !important;
+  font-size: 20px !important;
+}
+
+.accessible .weather-container * {
+  font-size: 120% !important;                
+}
+
+
+.accessibility-toggle {
+  background-color: black;
+  color: white;
+  margin-right: 15px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.accessible .accessibility-toggle {
+  background-color: yellow;
+  color: black;
+  font-size: 18px;
+}

@@ -108,7 +108,7 @@ export default function EmployeeManagement() {
               border: `1px solid ${colors.dark}`,
             }}
           />
-          <input
+          {/* <input
             type="text"
             placeholder="Role"
             value={formData.employee_role}
@@ -118,7 +118,24 @@ export default function EmployeeManagement() {
               borderRadius: '4px',
               border: `1px solid ${colors.dark}`,
             }}
-          />
+          /> */}
+          <select
+            required
+            value={formData.employee_role}
+            onChange={(e) => setFormData({ ...formData, employee_role: e.target.value })}
+            style={{
+              padding: '10px',
+              borderRadius: '4px',
+              border: `1px solid ${colors.dark}`,
+              backgroundColor: 'white',
+            }}
+          >
+            <option value="" disabled hidden>
+              Select Role
+            </option>
+            <option value="Manager">Manager</option>
+            <option value="Cashier">Cashier</option>
+          </select>
           <input
             type="text"
             placeholder="Email"

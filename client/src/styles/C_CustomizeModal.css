@@ -134,3 +134,52 @@
 .add-btn:hover {
   background-color: #8b2c2c;
 }
+
+
+/* ============================
+   HIGH CONTRAST MODE
+   ============================ */
+
+.accessible .customize-modal {
+  background-color: #000 !important;
+  color: #FFFF00 !important;
+  border: 3px solid #FFFF00 !important;
+}
+
+.accessible .modal-title {
+  color: #FFFF00 !important;
+  font-size: 32px !important;
+}
+
+.accessible .base-price {
+  color: #FFFF00 !important;
+}
+
+.accessible .option-label {
+  color: #FFFF00 !important;
+  font-weight: bold !important;
+  font-size: 22px !important;
+}
+
+/* Buttons */
+.accessible .option-btn {
+  background-color: #000 !important;
+  color: #FFFF00 !important;
+  border: 2px solid #FFFF00 !important;
+}
+
+.accessible .option-btn.selected {
+  background-color: #FFFF00 !important;
+  color: #000 !important;
+}
+
+.accessible .modal-actions button {
+  background-color: #FFFF00 !important;
+  color: #000 !important;
+  border: 2px solid #FFFF00 !important;
+}
+
+.accessible .total-price strong {
+  color: #FFFF00 !important;
+  font-size: 24px !important;
+}

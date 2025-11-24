@@ -1,7 +1,10 @@
 import React, { useState, useMemo } from "react";
 import "../../styles/C_CustomizeModal.css";
+import T from "../T";
+import { useAccessibility } from "../../context/AccessibilityContext";
 
 export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
+  const { highContrast } = useAccessibility();
   // state for all current options
   const [options, setOptions] = useState({
     sugar: "100%",
@@ -147,14 +150,14 @@ const handleAdd = () => {
 };
 
 return (
-  <div className="customize-modal-overlay">
+  <div className={`customize-modal-overlay ${highContrast ? "accessible" : ""}`}>
     <div className="customize-modal">
-    <h2 className="modal-title">{item.product_name}</h2>
-    <p className="base-price">Base Price: ${item.price}</p>
+    <h2 className="modal-title"><T text = {item.product_name}/></h2>
+    <p className="base-price"> <T text = "Base Price: "/>${item.price}</p>
 
     {/* Sugar Level */}
     <div className="option-section">
-      <label className="option-label">Sugar Level</label>
+      <label className="option-label"><T text = "Sugar Level"/></label>
       <div className="option-buttons">
         {sugarLevels.map((level) => (
           <button
@@ -170,7 +173,7 @@ return (
 
     {/* Ice Level */}
     <div className="option-section">
-      <label className="option-label">Ice Level</label>
+      <label className="option-label"><T text = "Ice Level"/></label>
       <div className="option-buttons">
         {iceLevels.map((level) => (
           <button
@@ -178,7 +181,7 @@ return (
             className={`option-btn ${options.ice === level ? "selected" : ""}`}
             onClick={() => handleSelect("ice", level)}
           >
-            {level}
+            <T text = {level}/>
           </button>
         ))}
       </div>
@@ -186,7 +189,7 @@ return (
 
     {/* Toppings (multi-select) */}
     <div className="option-section">
-      <label className="option-label">Toppings</label>
+      <label className="option-label"><T text = "Toppings"/></label>
       <div className="option-buttons">
         {toppingOptions.map((top) => (
           <button
@@ -194,7 +197,7 @@ return (
             className={`option-btn ${options.toppings.includes(top.name) ? "selected" : ""}`}
             onClick={() => handleSelect("toppings", top.name, true)}
           >
-            {top.name} (+${top.price})
+            <T text = {top.name}/> (+${top.price})
           </button>
         ))}
       </div>
@@ -202,7 +205,7 @@ return (
 
     {/* Misc Options (multi-select) */}
     <div className="option-section">
-      <label className="option-label">Misc Options</label>
+      <label className="option-label"><T text = "Misc Options"/></label>
       <div className="option-buttons">
         {miscOptions.map((opt) => (
           <button
@@ -210,7 +213,7 @@ return (
             className={`option-btn ${options.misc.includes(opt.name) ? "selected" : ""}`}
             onClick={() => handleSelect("misc", opt.name, true)}
           >
-            {opt.name} (+${opt.price})
+            <T text = {opt.name}/> (+${opt.price})
           </button>
         ))}
       </div>
@@ -218,7 +221,7 @@ return (
 
     {/* Temperature */}
     <div className="option-section">
-      <label className="option-label">Temperature</label>
+      <label className="option-label"><T text = "Temperature"/></label>
       <div className="option-buttons">
         {temperatureOptions.map((temp) => (
           <button
@@ -226,7 +229,7 @@ return (
             className={`option-btn ${options.temperature === temp ? "selected" : ""}`}
             onClick={() => handleSelect("temperature", temp)}
           >
-            {temp}
+            <T text = {temp}/>
           </button>
         ))}
       </div>
@@ -239,8 +242,8 @@ return (
 
     {/* Action Buttons */}
     <div className="modal-actions">
-      <button className="cancel-btn" onClick={onClose}>Cancel</button>
-      <button className="add-btn" onClick={handleAdd}>Add to Order</button>
+      <button className="cancel-btn" onClick={onClose}><T text = "Cancel"/></button>
+      <button className="add-btn" onClick={handleAdd}><T text = "Add to Order"/></button>
     </div>
   </div>
 </div>

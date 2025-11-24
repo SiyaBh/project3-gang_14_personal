@@ -1,0 +1,54 @@
+SCRUM Meeting 4 for Project 3
+Prepared by: Marisol Moreno
+Meeting Date: 11/17/2025
+Meeting Attendees
+ Ananya Adiki
+Siya Bhatkal
+ Marisol Moreno
+ Renee Gunukula
+Meeting Agenda Items
+Discuss what each team member has completed
+Divide work for sprint 2
+
+Status Update Since Last Meeting
+Accomplishments:
+Completed sprint 1 
+Completed sprint 1 retrospective meeting
+Completed sprint 1 materials document
+
+Tasks Completed:
+Task Description
+Assigned to
+Completed? (yes/no)
+Sprint 1 retrospective
+Marisol
+Yes
+Sprint 1 retrospective
+Ananya
+Yes
+Sprint 1 retrospective
+Renee
+Yes
+Sprint 1 retrospective
+Siya
+Yes
+
+Before The Next Meeting
+Plans:
+Marisol - google translate api
+Ananya - Accessibility symbol menu - text contrast 
+Siya - customer UI + backend 
+Renee - connect different images to the menu options for customer kiosk
+
+Task Assignments:
+Task Description
+Assigned to
+Connect different images to the menu options for customer kiosk
+Renee
+Google translate api implementation
+Marisol
+Customer UI + backend 
+Siya
+Accessibility symbol menu - text contrast 
+Ananya
+

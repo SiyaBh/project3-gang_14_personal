@@ -1,0 +1,60 @@
+SCRUM Meeting 5 for Project 3
+Prepared by: Marisol Moreno
+Meeting Date: 11/19/2025
+
+Meeting Attendees
+Ananya Adiki
+Siya Bhatkal
+Marisol Moreno
+Renee Gunukula
+
+Meeting Agenda Items
+Discuss what each team member has completed
+Plan what we want to accomplish before next meeting
+
+Status Update Since Last Meeting
+
+Accomplishments:
+Ananya - Added high contrast button to log in screen and updates the contrast for the pages
+Marisol - Added google translate api key and route to server folder 
+
+Current Blocks: Stats exam for Renee and Siya, Atmo Exam for Marisol
+
+Tasks Completed:
+Task Description
+Assigned to
+Completed? (yes/no)
+
+Fully implemented google translate feature
+Marisol
+No
+High contrast toggle 
+Ananya
+Yes
+Connect different images to the menu options for customer kiosk
+Renee
+No
+Customer Kiosk UI + backend 
+Siya
+No
+
+Before The Next Meeting
+Plans:
+Marisol - connect google translate api to client side - fully implementing translate feature
+Ananya - Waiting on kiosk components to be finalized, work on out of season drink functionality
+Siya - Customer Kiosk UI + backend 
+Renee - connect different images to the menu options for customer kiosk
+
+Task Assignments:
+Task Description
+Assigned to
+
+Connect different images to the menu options for customer kiosk
+Renee
+Finish Google translate api implementation
+Marisol
+Customer Kiosk UI + backend 
+Siya
+Work on out of season drink functionality
+Ananya
+

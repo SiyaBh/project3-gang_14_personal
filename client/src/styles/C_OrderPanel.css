@@ -1,27 +1,19 @@
-.order-panel {
-  position: fixed;
+.cashier-dashboard .order-panel {
+    position: fixed;
   top: 0;
   right: 0;
-  width: 380px; /* Adjust as needed */
+  width: 380px;
   height: 100%;
-  background-color: #f8d5d5;
-  border-left: 2px solid #e0e0e0;
-  padding: 20px;
-  box-shadow: -4px 0 8px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
   z-index: 50;
-  overflow-y: auto;
 }
-
-.order-title {
+.cashier-dashboard .order-title {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 20px;
   color: #020202
 }
 
-.order-items {
+.cashier-dashboard .order-items {
   flex: 1;
   max-height: 700px;
   overflow-y: auto;
@@ -31,7 +23,7 @@
   margin-bottom: 20px;
 }
 
-.order-item {
+.cashier-dashboard .order-item {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -42,11 +34,11 @@
   position: relative;
 }
 
-.item-left {
+.cashier-dashboard .item-left {
   flex: 1;
 }
 
-.item-right {
+.cashier-dashboard .item-right {
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
@@ -54,13 +46,13 @@
   min-width: 100px; 
 }
 
-.quantity-controls {
+.cashier-dashboard .quantity-controls {
  display: flex;
   align-items: center;
   gap: 8px;        
 }
 
-.quantity-btn {
+.cashier-dashboard .quantity-btn {
   width: 36px;
   height: 36px;
   border: 2px solid #B43F3F; /* red border */
@@ -76,15 +68,15 @@
   transition: background-color 0.2s ease;
 }
 
-.quantity-btn:hover {
+.cashier-dashboard .quantity-btn:hover {
   background-color: #bf183460;
 }
 
-.quantity-btn:active {
+.cashier-dashboard .quantity-btn:active {
   background-color: #bf183460;
 }
 
-.quantity-controls .quantity {
+.cashier-dashboard .quantity-controls .quantity {
   min-width: 28px;
   text-align: center;
   font-size: 18px;
@@ -92,23 +84,23 @@
   color: #020202;
 }
 
-.item-name {
+.cashier-dashboard .item-name {
   font-weight: 600;
   margin-bottom: 4px;
 }
 
-.item-options {
+.cashier-dashboard .item-options {
   font-size: 0.9rem;
   color: #555;
 }
 
-.empty-text {
+.cashier-dashboard .empty-text {
   text-align: center;
   color: #020202;
   font-style: italic;
 }
 
-.order-footer {
+.cashier-dashboard .order-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -116,13 +108,13 @@
   padding-top: 10px;
 }
 
-.total {
+.cashier-dashboard .total {
   font-weight: 600;
   font-size: 1.2rem;
   color: #020202;
 }
 
-.checkout-btn {
+.cashier-dashboard .checkout-btn {
   padding: 22px 40px;
   background-color: #BF1834;
   color: #fff;
@@ -134,6 +126,6 @@
   transition: background 0.2s;
 }
 
-.checkout-btn:hover {
+.cashier-dashboard .checkout-btn:hover {
   background-color: #8c2f2f;
 }

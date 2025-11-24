@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `${process.env.REACT_APP_SERVER_URL}/api/order'`;
+const BASE_URL = 'http://localhost:3001/api/order';
 
 
 export const getOrders = () => axios.get(`${BASE_URL}`).then(res => res.data);

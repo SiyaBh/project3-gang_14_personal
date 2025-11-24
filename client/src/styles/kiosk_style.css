@@ -1,0 +1,155 @@
+
+.kiosk {
+  background-color:#103754;
+  min-height: 100vh;
+  padding: 20px;
+  color: #000; 
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Heading */
+.kiosk h1 {
+  color: #fece8c; 
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Tabs container */
+.kiosk .tabs-container {
+  border-bottom: 2px solid #fece8c; 
+  justify-content: center;
+}
+
+/* Tab styles */
+.kiosk .tab {
+  background: #fff;          
+  color: #B43F3F;             
+  font-weight: 500;
+  font-size: 0.9rem;  
+  padding: 0.2rem 0.75rem;
+  border: 2px solid #fece8c;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-c
+}
+.kiosk  .order_button{
+  background-color: #FFFFFF;
+  color: #BF1834;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s;
+  text-align: center;
+  display: block;
+  margin: 20px auto 0 auto;
+}
+
+.kiosk .menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 350px); 
+  gap: 100px 400px;                        
+  justify-content: center;                 
+  margin-top: 20px;
+}
+
+
+.kiosk .menu-item-card {
+  width: 100%;      
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: cornsilk;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  text-align: center;
+  border: 2px solid #fece8c;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+.kiosk .menu-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+.kiosk .menu-item-price {
+  font-size: 1.5rem;        
+  font-weight: 600;
+  margin-top: auto;  
+}
+.kiosk .kiosk-search-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 15px;          
+  margin-top: 60px;   
+}
+
+.kiosk .kiosk-search-bar {
+  width: 60%;
+  max-width: 400px;
+  padding: 10px 15px;
+  margin: 20px auto;
+  display: block;
+  border: 2px solid #fece8c;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.accessible .kiosk {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+}
+
+/* Heading */
+.accessible .kiosk h1 {
+  color: #FFFF00 !important;
+  font-size: 40px !important;
+}
+
+/* Category tabs */
+.accessible .kiosk .tab {
+  background-color: #FFFF00 !important;
+  color: #000000 !important;
+  border-color: #FFFF00 !important;
+  font-size: 20px !important;
+}
+
+/* Menu cards */
+.accessible .kiosk .menu-item-card {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+  border: 2px solid #FFFF00 !important;
+}
+
+/* Price text */
+.accessible .kiosk .menu-item-price {
+  color: #FFFF00 !important;
+}
+
+/* Search bar */
+.accessible .kiosk .kiosk-search-bar {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+  border: 2px solid #FFFF00 !important;
+}
+
+/* Checkout button */
+.accessible .kiosk .order_button {
+  background-color: #FFFF00 !important;
+  color: #000000 !important;
+  font-size: 20px !important;
+}
+
+/* Menu item name text */
+.accessible .kiosk .menu-item-card h3,
+.accessible .kiosk .menu-item-card p,
+.accessible .kiosk .menu-item-card * {
+  color: #FFFF00 !important;
+}

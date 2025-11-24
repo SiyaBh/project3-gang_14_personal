@@ -14,8 +14,6 @@ pool.on('connect', (client) => {
   client.query(`SET TIME ZONE 'America/Chicago'`);
 });
 
-
-
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query(`
@@ -44,11 +42,10 @@ router.get('/x-report', async (req, res) => {
              COUNT(o.order_id) AS total_orders
       FROM orders o
       WHERE o.order_date = CURRENT_DATE
-        AND o.order_time BETWEEN TIME  '11:00:00.13192-06' AND TIME '22:59:59.13192-06'
+        AND o.order_time BETWEEN TIME '11:00' AND TIME '22:59:59.999999'
       GROUP BY hour
       ORDER BY hour;
     `);
-    
 
     const data = result.rows.map(r => ({
       hour: r.hour,

@@ -42,3 +42,7 @@
   color:#020202;
   margin-top: auto;  
 }
+
+.disabled-card {
+  filter: grayscale(60%);
+}

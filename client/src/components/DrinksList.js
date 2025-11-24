@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { getDrinks, addDrink, updateDrink, deleteDrink } from "../api/drinks";
 import { Plus, Edit2, Trash2, Save, X, RefreshCw } from 'lucide-react';
+//import { supabase } from "../api/supabaseClient";
+import { uploadImage } from "../api/upload";
 
 const colors = {
   primary: '#BF1834',
@@ -50,6 +52,7 @@ export default function DrinksManagement() {
   };
 
   const handleUpdate = (updatedItem) => {
+    console.log("🔍 handleUpdate payload:", updatedItem); 
     setLoading(true);
     setError(null);
     updateDrink(updatedItem.product_name, updatedItem)
@@ -84,8 +87,59 @@ export default function DrinksManagement() {
       price: '',
       product_type: '',
       season: '',
-      available_months: ''
+      available_months: '',
+      image_url: ''
     });
+    const [uploading, setUploading] = useState(false);
+
+    // const fileChange = async (e) => { //supabase code
+    //   const file = e.target.files[0];
+    //   if(!file) {
+    //     return;
+    //   }
+    //   setUploading(true);
+    //   try {
+    //     const filePath = `${Date.now()}-${file.name}`;
+    //     const {error: uploadError} = await supabase.storage
+    //     .from("menu_images").upload(filePath, file);
+    //     if(uploadError) {
+    //       console.error(uploadError);
+    //       alert("Upload failed");
+    //       return;
+    //     }
+    //     const {data: publicData} = supabase.storage
+    //     .from("menu_images").getPublicUrl(filePath);
+    //     setFormData(prev => ({
+    //       ...prev, image_url: publicData.publicUrl
+    //     }))
+    //   } finally {
+    //     setUploading(false);
+    //   }
+    // };
+
+    const fileChange = async (e) => { //Multer
+      const file = e.target.files[0];
+      if (!file) return;
+
+      setUploading(true);
+
+      try {
+        const imageUrl = await uploadImage(file);
+        console.log("🔥 Uploaded image URL:", imageUrl);
+
+        setFormData((prev) => ({
+          ...prev,
+          image_url: imageUrl,  
+        }));
+        console.log("SETTING formData.image_url TO:", imageUrl);
+      } catch (err) {
+        console.error(err);
+        alert("Upload error");
+      } finally {
+        setUploading(false);
+      }
+    };
+
 
     return (
       <div style={{
@@ -121,7 +175,7 @@ export default function DrinksManagement() {
               border: `1px solid ${colors.dark}`,
             }}
           />
-          <input
+          {/* <input
             type="text"
             placeholder="Type"
             value={formData.product_type}
@@ -131,8 +185,26 @@ export default function DrinksManagement() {
               borderRadius: '4px',
               border: `1px solid ${colors.dark}`,
             }}
-          />
-          <input
+          /> */}
+          <select
+            required
+            value={formData.product_type}
+            onChange={(e) => setFormData({ ...formData, product_type: e.target.value })}
+            style={{
+              padding: '10px',
+              borderRadius: '4px',
+              border: `1px solid ${colors.dark}`,
+              backgroundColor: 'white',
+            }}
+          >
+            <option value="" disabled hidden>Select Type</option>
+            <option value="Milk Tea">Milk Tea</option>
+            <option value="Fruit Tea">Fruit Tea</option>
+            <option value="Non-Caffeinated">Non-Caffeinated</option>
+            <option value="Matcha">Matcha</option>
+            <option value="Ice Blended">Ice Blended</option>
+          </select>
+          {/* <input
             type="text"
             placeholder="Season"
             value={formData.season}
@@ -142,8 +214,25 @@ export default function DrinksManagement() {
               borderRadius: '4px',
               border: `1px solid ${colors.dark}`,
             }}
-          />
-          <input
+          /> */}
+          <select
+            required
+            value={formData.season}
+            onChange={(e) => setFormData({ ...formData, season: e.target.value })}
+            style={{
+              padding: '10px',
+              borderRadius: '4px',
+              border: `1px solid ${colors.dark}`,
+              backgroundColor: 'white',
+            }}
+          >
+            <option value="" disabled hidden>
+              Select Season
+            </option>
+            <option value="Year-Round">Year-Round</option>
+            <option value="Seasonal">Seasonal</option>
+          </select>
+          {/* <input
             type="text"
             placeholder="Available Months"
             value={formData.available_months}
@@ -153,7 +242,41 @@ export default function DrinksManagement() {
               borderRadius: '4px',
               border: `1px solid ${colors.dark}`,
             }}
-          />
+          /> */}
+          <select
+              required
+              value={formData.available_months}
+              onChange={(e) => setFormData({ ...formData, available_months: e.target.value })}
+              style={{
+                padding: '10px',
+                borderRadius: '4px',
+                border: `1px solid ${colors.dark}`,
+                backgroundColor: 'white',
+              }}
+            >
+              <option value="" disabled hidden>
+                Select Available Months
+              </option>
+              <option value="1,2,3,4,5,6,7,8,9,10,11,12">1,2,3,4,5,6,7,8,9,10,11,12</option>
+              <option value="12,1,2">12,1,2</option>
+              <option value="3,4,5">3,4,5</option>
+              <option value="6,7,8">6,7,8</option>
+              <option value="9,10,11">9,10,11</option>
+            </select>
+          <div>
+            <label>Image:</label>
+            <input type="file" accept="image/*" onChange={fileChange}/>
+            {uploading && <p>Uploading...</p>}
+            {formData.image_url && (
+              <div style={{padding: '10px'}}>
+                <p>Preview:</p>
+                <img
+                src={formData.image_url}
+                alt="Drink preview"
+                style={{maxWidth: "150px", borderRadius: "8px"}}/>
+              </div>
+            )}
+          </div>
         </div>
         <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
           <button
@@ -283,6 +406,7 @@ export default function DrinksManagement() {
               <th style={{ padding: '15px', textAlign: 'left' }}>Price</th>
               <th style={{ padding: '15px', textAlign: 'left' }}>Season</th>
               <th style={{ padding: '15px', textAlign: 'left' }}>Available Months</th>
+              <th style={{ padding: '15px', textAlign: 'left' }}>Image</th>
               <th style={{ padding: '15px', textAlign: 'center' }}>Actions</th>
             </tr>
           </thead>
@@ -300,6 +424,23 @@ export default function DrinksManagement() {
                 <td style={{ padding: '15px', color: colors.dark }}>${parseFloat(drink.price).toFixed(2)}</td>
                 <td style={{ padding: '15px', color: colors.dark }}>{drink.season}</td>
                 <td style={{ padding: '15px', color: colors.dark }}>{drink.available_months}</td>
+                {/*<td style={{ padding: '15px', color: colors.dark }}>{drink.image_url}</td>*/}
+                <td style={{ padding: '15px', color: colors.dark }}>
+                  {drink.image_url ? (
+                    <img 
+                      src={drink.image_url} 
+                      alt={drink.product_name}
+                      style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        objectFit: 'cover', 
+                        borderRadius: '8px' 
+                      }}
+                    />
+                  ) : (
+                    <span>No image</span>
+                  )}
+                </td>
                 <td style={{ padding: '15px', textAlign: 'center' }}>
                   <button
                     onClick={() => { setEditingItem(drink); setShowAddForm(false); }}

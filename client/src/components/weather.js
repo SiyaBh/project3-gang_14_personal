@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getWeatherData } from "../api/weatherAPI";
+import T from "./T";
 
 export default function Weather() {
     const[temperature, setTemperature] = useState(0.0);
@@ -45,8 +46,8 @@ export default function Weather() {
             />
             {}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "20px" }}>
-            <div style={{ fontSize: "16px", opacity: 0.8 }}>College Station, USA</div>
-            <div style={{ fontSize: "18px", fontWeight: "bold" }}>{temperature}°F | {weath}</div>
+            <div style={{ fontSize: "16px", opacity: 0.8 }}><T text = "College Station, USA"/></div>
+            <div style={{ fontSize: "18px", fontWeight: "bold" }}>{temperature}°F | <T text = {weath}/></div>
   </div>
         </div>
     )
@@ -68,7 +69,7 @@ function getWeatherImage(weatherId) {
             return "../../images/sun.png";
         case(weatherId === 801 || weatherId === 802):
             return "../../images/partly-cloudy.png";
-        case(weatherId === 803 || weatherId < 804):
+        case(weatherId === 803 || weatherId === 804):
             return "../../images/cloudy.png";
         default:
             return "";

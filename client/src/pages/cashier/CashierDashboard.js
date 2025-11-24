@@ -4,6 +4,7 @@ import C_MenuCategoryTabs from "../../components/CashierMenu/C_MenuCategoryTabs"
 import C_MenuGrid from "../../components/CashierMenu/C_MenuGrid";
 import { AuthContext } from "../../context/AuthContext";
 import "../../styles/CashierDashboard.css";
+
 import { getDrinks } from '../../api/drinks';
 import { DebouncedKey } from '../../components/CashierMenu/Debouncing';
 import C_OrderPanel from "../../components/CashierMenu/C_OrderPanel";
@@ -18,22 +19,32 @@ export default function CashierDashboard() {
 
   const filteredMenu = useMemo( () => {
     const searchInput = debouncedSearch;
+    const currentMonth = new Date().getMonth() + 1;
     if(searchInput) {
       return allDrinks.filter(
         (item) => item.product_name.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    return allDrinks.filter( //menuItems is the "array"
-      //(item) => item.product_type === category
-      (item) => {
-        if(item.season === category) {
-          return true;
-        } else if(item.season === "Year-Round"){
-          return item.product_type === category;
-        }
-      }
-    );
+    // SEASONAL TAB
+    if (category === "Seasonal") {
+      return allDrinks
+        .filter((item) => item.season === "Seasonal")
+        .map((item) => {
+          const months = item.available_months.split(",").map((m) => parseInt(m));
+          return {
+            ...item,
+            isAvailable: months.includes(currentMonth),
+          };
+        });
+    }
+
+    // NORMAL CATEGORY TABS
+    return allDrinks.filter((item) => {
+      if (item.season === category) return true;
+      if (item.season === "Year-Round") return item.product_type === category;
+      return false;
+    });
   }, [allDrinks, category, debouncedSearch]);
 
   const fetchData = async () => { 
@@ -77,13 +88,12 @@ export default function CashierDashboard() {
   // Clears current order and updates database
   const handleCheckout = async () => {
     console.log("Checkout items:", orderItems);
-    // TODO: Send orderItems to backend for processing
 
     try {
       const res = await fetch("/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderItems), // << send the array, not { items: ... }
+        body: JSON.stringify(orderItems),
         credentials: "include"
       });
       if (!res.ok) throw new Error(await res.text());
@@ -93,15 +103,14 @@ export default function CashierDashboard() {
     } catch (err) {
       console.error("Checkout failed:", err);
     }
-
-    setOrderItems([]); // Clear order after checkout
   };
 
 
   
 
+
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container cashier-dashboard">
       {/* Left section: Menu */}
       <div className="left-section">
         <h1 className="dashboard-header">Cashier Dashboard</h1>

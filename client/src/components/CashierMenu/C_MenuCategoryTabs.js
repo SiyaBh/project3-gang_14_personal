@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/C_MenuCategoryTabs.css";
-
+import T from "../T";
 export default function C_MenuCategoryTabs({ selected, onSelect }) {
   const categories = ["Milk Tea", "Fruit Tea", "Non-Caffeinated", "Matcha", "Ice Blended", "Seasonal"];
 
@@ -12,7 +12,7 @@ export default function C_MenuCategoryTabs({ selected, onSelect }) {
           className={`tab ${selected === cat ? "selected" : ""}`}
           onClick={() => onSelect(cat)}
         >
-          {cat}
+          <T text = {cat}/>
         </button>
       ))}
     </div>

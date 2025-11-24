@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
       );
       const menuIDFK = menuResult.rows[0]?.menu_id ?? null;
 
-      orderTotal += parseFloat(totalPrice)* quantity;
+      orderTotal += (parseFloat(totalPrice)*quantity);
 
       const iceMap = { None: 0, Less: 50, Regular: 100, More: 125 };
       const sugarMap = { "0%": 0, "30%": 30, "50%": 50, "80%": 80, "100%": 100, "120%": 120 };
@@ -104,7 +104,7 @@ router.post('/', async (req, res) => {
       )
       const customId = customResult.rows[0].custom_id;
 
-      // Insert into drinks (or drinks table, depending on schema)
+      // Insert into drinks here
       for(let i = 0; i < quantity; i++) {
         const productRresult = await client.query(
           `INSERT INTO drink
@@ -125,7 +125,7 @@ router.post('/', async (req, res) => {
     }
 
     //insert order is now done (employee_id is nullable) -- ***still need to find a way to get employee_id
-    const employee_id = null; //TODO
+    const employee_id = 1; //TODO
     const orderResult = await client.query( 
       `INSERT INTO orders (employee_id, total_order_price, order_date, order_time) 
        VALUES ($1, $2, CURRENT_DATE, CURRENT_TIME) 

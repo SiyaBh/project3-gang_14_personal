@@ -11,20 +11,30 @@ const TrendsAndAnalytics = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedChart, setSelectedChart] = useState('Product Usage');
+  const [disabled, setDisabled] = useState(false);
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  useEffect(() => {
+    const lastZRun = localStorage.getItem('zReportLastRun');
+    if(lastZRun === today) {
+      setDisabled(true);
+    }
+  }, [today]);
 
   // Fetch Z report only once
-  useEffect(() => {
-    const fetchZ = async () => {
-      try {
-        const zReport = await getZReport();
-        setZData(zReport);
-      } catch (err) {
-        console.error('Error fetching Z report:', err);
-        setError('Failed to load Z report');
-      }
-    };
-    fetchZ();
-  }, []);
+  // useEffect(() => {
+  //   const fetchZ = async () => {
+  //     try {
+  //       const zReport = await getZReport();
+  //       setZData(zReport);
+  //     } catch (err) {
+  //       console.error('Error fetching Z report:', err);
+  //       setError('Failed to load Z report');
+  //     }
+  //   };
+  //   fetchZ();
+  // }, []);
 
   // Fetch usage and X reports
   useEffect(() => {
@@ -99,6 +109,28 @@ const TrendsAndAnalytics = () => {
     }
   };
 
+  const changingToZ = async (e) => {
+    const value = e.target.value;
+
+    if(value === 'Z Report' && disabled) {
+      alert('You have already clicked on the Z report for today. Try again tomorrow')
+      return;
+    } else if(value === 'Z Report' && !disabled) {
+      try {
+        const zReport = await getZReport();
+        setZData(zReport);
+        localStorage.setItem('zReportLastRun', today);
+        setDisabled(true);
+      } catch (err) {
+        console.error('Error fetching Z report:', err);
+        setError('Failed to load Z report');
+        return;
+      }
+    }
+
+    setSelectedChart(value);
+  }
+
   return (
     <div className="p-8">
       <div className="mb-6 text-center">
@@ -106,12 +138,12 @@ const TrendsAndAnalytics = () => {
         <select
           id="chartSelect"
           value={selectedChart}
-          onChange={(e) => setSelectedChart(e.target.value)}
+          onChange={changingToZ}
           className="border rounded px-2 py-1"
         >
           <option value="Product Usage">Product Usage</option>
           <option value="X Report">X Report</option>
-          <option value="Z Report">Z Report</option>
+          <option value="Z Report" disabled={disabled && selectedChart !== 'Z Report'}>Z Report {disabled && selectedChart !== 'Z Report' ? '(already run today)' : ''}</option>
         </select>
       </div>
 

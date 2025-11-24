@@ -1,0 +1,57 @@
+SCRUM Meeting 3 for Project 3
+Prepared by: Marisol
+Meeting Date: 11/09/2025
+Meeting Attendees
+ Ananya Adiki
+Siya Bhatkal
+ Marisol Moreno
+ Renee Gunukula
+Meeting Agenda Items
+Discuss what each team member has completed
+Update product backlog and sprint backlog
+Status Update Since Last Meeting
+Accomplishments:
+Marisol - Finished making the cashierboard UI including fixing the drink menu cards and implementing the order panel and customization pop up.
+Ananya - Fixed some issues for the manager dashboard 
+Siya -Crearing the X (revenue report)  and Z report (cumulative sales # of orders)
+Renee - Integrating the database with the cashier view, make sure orders placed are reflected 
+Main blocker: datathon
+
+Tasks Completed:
+Task Description
+Assigned to
+Completed? (yes/no)
+Finished cashier dashboard UI including customization pop up and order panel
+Marisol
+Yes
+Fixed issues with the manager dashboard
+Ananya
+Yes
+Connected database with the front-end cashier dashboard to reflect orders placed by the cashier in the database
+Renee
+Yes
+Created the X and Z reports in the Manager Dashboard
+Siya
+Yes
+
+Before The Next Meeting
+Plans:
+Marisol - Finish the sprint 1 burn-down chart. Fix timestamp issue in database
+Ananya - Worked on product burn-down chart, disabling drink cards not in season seasonal drinks 
+Siya - Finish the retrospective summary, and host a site on Render.
+Renee - Fix issues with seasonal drinks, adjusted the database schema
+
+Task Assignments:
+Task Description
+Assigned to
+Finished connecting database to front-end cashier dashboard and adjusted database schema to account for redundant data
+Renee
+Finish sprint 1 burn-down chart and fix timestamp issue in order table in the database
+Marisol
+Finish the retrospective summary and host MVP on Render
+Siya
+Finish the product burn-down chart and disable not in season drinks 
+Ananya
+
+Minutes from Previous Meeting
+During the meeting on November 5, 2025, the team discussed their recent progress and updated both the product and sprint backlogs. Marisol made progress on the cashier dashboard using dummy data, Ananya implemented Google authentication and fixed the ingredient and employee routes, Siya developed routes and functionalities for the task and analytics pages, and Renee completed work on the Weather API. All assigned tasks from the previous sprint were completed. For the next meeting, Marisol plans to finish the cashier UI and add a welcome page, Renee will connect the backend with the cashier view, and both Ananya and Siya will work on resolving issues with the manager dashboard.
