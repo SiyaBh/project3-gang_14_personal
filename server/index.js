@@ -4,7 +4,7 @@ const path = require("path");
 const multer = require("multer");
 
 const app = express();
-const port = 3001; // usually server is 3001, React runs on 3000
+const port = process.env.PORT || 3001; // usually server is 3001, React runs on 3000
 
 app.use(cors());
 app.use(express.json());
@@ -77,7 +77,7 @@ app.post("/api/upload", upload.single("image"), (req, res) => {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const imageUrl = `http://localhost:3001/uploads/${req.file.filename}`;
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
   console.log("Sending imageUrl:", imageUrl); 
   return res.json({ imageUrl });
 });
@@ -85,7 +85,6 @@ app.post("/api/upload", upload.single("image"), (req, res) => {
 
 
 
-
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
