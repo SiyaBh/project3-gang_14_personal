@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const path = require("path");
 const multer = require("multer");
+// ✅ ADD CLOUDINARY IMPORTS HERE
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -21,7 +24,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve uploads folder
+// ✅ CONFIGURE CLOUDINARY HERE
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Serve uploads folder (keep this for backward compatibility with old images)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // API routes
@@ -39,27 +49,37 @@ app.use('/api/ingredients', ingredientRouter);
 app.use('/api/drinks', drinkRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/trends', trendsRouter);
-app.use('/api/auth', authRoutes);  // ✅ Fixed: Added /api/ prefix
+app.use('/api/auth', authRoutes);
 app.use('/api/translate', translateRouter);
 app.use('/api/kiosk', kioskRouter);
 
-// Multer setup for uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, "uploads")),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
+// ✅ REPLACE MULTER SETUP WITH CLOUDINARY STORAGE
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'boba-shop-images', // Folder name in Cloudinary
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
+    transformation: [{ width: 500, height: 500, crop: 'limit' }] // Optional: resize images
+  }
 });
+
 const upload = multer({ storage });
 
+// ✅ UPDATE UPLOAD ROUTE - CLOUDINARY RETURNS URL AUTOMATICALLY
 app.post("/api/upload", upload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).json({ error: "No file uploaded" });
-  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+  
+  // Cloudinary automatically provides the full URL in req.file.path
+  const imageUrl = req.file.path;
+  
+  console.log("Image uploaded to Cloudinary:", imageUrl);
   return res.json({ imageUrl });
 });
 
-// ✅ Serve React frontend - MOVED TO THE VERY END
+// Serve React frontend - MOVED TO THE VERY END
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-// ✅ Catch-all route - MUST BE LAST
+// Catch-all route - MUST BE LAST
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });

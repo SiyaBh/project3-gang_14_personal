@@ -1,7 +1,6 @@
 
 import axios from "axios";
 
-// Base API URL (Render in production, localhost in development)
 const BASE_API = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 // ========== IMAGE UPLOAD ==========
