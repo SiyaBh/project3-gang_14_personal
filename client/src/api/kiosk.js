@@ -15,12 +15,19 @@ const BASE_ORDER_URL =
 export const getDrinks = async () => {
   try {
     const res = await axios.get(BASE_DRINKS_URL);
-    return res.data;
+    // Make sure we always return an array
+    if (Array.isArray(res.data)) {
+      return res.data;
+    } else {
+      console.warn("Warning: drinks API did not return an array", res.data);
+      return [];
+    }
   } catch (err) {
-    console.error("Error fetching drinks:", err);
-    return [];
+    console.error("Error fetching drinks:", err.message || err);
+    return []; // fallback to empty array
   }
 };
+
 
 export const placeOrder = async (orderItems) => {
   try {
