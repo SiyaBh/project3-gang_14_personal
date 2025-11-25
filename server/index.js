@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require("path");
 const multer = require("multer");
-// ✅ ADD CLOUDINARY IMPORTS HERE
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
@@ -18,20 +17,17 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Log all requests FIRST (moved up)
 app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
 
-// ✅ CONFIGURE CLOUDINARY HERE
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Serve uploads folder (keep this for backward compatibility with old images)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // API routes
