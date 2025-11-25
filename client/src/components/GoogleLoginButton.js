@@ -8,18 +8,19 @@ export default function GoogleLoginButton() {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
     const handleSuccess = async (response) => {
         try {
-    
             const res = await axios.post(`${API_URL}/auth/google`, {
-            credential: response.credential
+                credential: response.credential
             });
 
             const userData = {
-            name: res.data.name,
-            email: res.data.email,
-            role: res.data.role.toLowerCase(), // normalize role to lowercase
-            picture: res.data.picture
+                name: res.data.name,
+                email: res.data.email,
+                role: res.data.role.toLowerCase(),
+                picture: res.data.picture
             };
 
             login(userData);
