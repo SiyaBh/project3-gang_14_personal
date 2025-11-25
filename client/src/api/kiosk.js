@@ -1,14 +1,17 @@
 // client/src/api/kiosk.js
 import axios from "axios";
 
+const BASE_DRINKS_URL =
+  process.env.NODE_ENV === "production"
+    ? `${process.env.REACT_APP_API_URL}/api/drinks`
+    : "http://localhost:3001/api/drinks";
 
-const BASE_DRINKS_URL = process.env.REACT_APP_API_URL 
-  ? `${process.env.REACT_APP_API_URL}/api/drinks`
-  : 'http://localhost:3001/api/drinks';
+const BASE_ORDER_URL =
+  process.env.NODE_ENV === "production"
+    ? `${process.env.REACT_APP_API_URL}/api/order`
+    : "http://localhost:3001/api/order";
 
-const BASE_ORDER_URL = process.env.REACT_APP_API_URL 
-  ? `${process.env.REACT_APP_API_URL}/api/order`
-  : 'http://localhost:3001/api/order';
+
 export const getDrinks = async () => {
   try {
     const res = await axios.get(BASE_DRINKS_URL);

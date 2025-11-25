@@ -1,11 +1,16 @@
 import axios from 'axios';
-const BASE_URL = process.env.REACT_APP_API_URL 
-  ? `${process.env.REACT_APP_API_URL}/api/drinks`
-  : 'http://localhost:3001/api/drinks';
 
 
-export const getDrinks = () => axios.get(BASE_URL).then((res) => res.data); // ensures we get an array
-export const addDrink = (drink) => axios.post(BASE_URL, drink);
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? `${process.env.REACT_APP_API_URL}/api/drinks`
+    : "http://localhost:3001/api/drinks";
+
+
+export const getDrinks = () => axios.get(BASE_URL).then((res) => res.data);
+
+export const addDrink = (drink) => axios.post(BASE_URL, drink).then(res => res.data);
+
 export const updateDrink = (name, data) => {
   const safeName = encodeURIComponent(name);
   const safePrice =
@@ -19,9 +24,10 @@ export const updateDrink = (name, data) => {
     available_months: data.available_months,
     image_url: data.image_url,
   };
-  return axios.put(`${BASE_URL}/${safeName}`, payload);
+  return axios.put(`${BASE_URL}/${safeName}`, payload).then(res => res.data);
 };
+
 export const deleteDrink = (name) => {
   const safeName = encodeURIComponent(name);
-  axios.delete(`${BASE_URL}/${safeName}`);
-}
+  return axios.delete(`${BASE_URL}/${safeName}`).then(res => res.data);
+};
