@@ -6,9 +6,15 @@ const multer = require("multer");
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors());
-app.use(express.json());
 
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://project3-gang-14-personal-3.onrender.com"
+  ],
+  credentials: true,
+}));
+app.use(express.json());
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
