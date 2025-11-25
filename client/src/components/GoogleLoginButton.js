@@ -12,7 +12,9 @@ export default function GoogleLoginButton() {
 
     const handleSuccess = async (response) => {
         try {
-            const res = await axios.post(`${API_URL}/auth/google`, {
+            console.log("Attempting login to:", `${API_URL}/api/auth/google`);
+            
+            const res = await axios.post(`${API_URL}/api/auth/google`, {
                 credential: response.credential
             });
 
@@ -29,6 +31,7 @@ export default function GoogleLoginButton() {
             else if (userData.role === "cashier") navigate("/cashier");
 
         } catch (err) {
+            console.error("Login error:", err.response?.data || err.message);
             alert("Unauthorized Employee");
         }
     };

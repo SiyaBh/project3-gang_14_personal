@@ -6,7 +6,6 @@ const multer = require("multer");
 const app = express();
 const port = process.env.PORT || 3001;
 
-
 app.use(cors({
   origin: [
     "http://localhost:3000",
@@ -15,6 +14,13 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+
+// Log all requests FIRST (moved up)
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
+});
+
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -33,7 +39,7 @@ app.use('/api/ingredients', ingredientRouter);
 app.use('/api/drinks', drinkRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/trends', trendsRouter);
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);  // ✅ Fixed: Added /api/ prefix
 app.use('/api/translate', translateRouter);
 app.use('/api/kiosk', kioskRouter);
 
@@ -50,17 +56,12 @@ app.post("/api/upload", upload.single("image"), (req, res) => {
   return res.json({ imageUrl });
 });
 
-// Serve React frontend
+// ✅ Serve React frontend - MOVED TO THE VERY END
 app.use(express.static(path.join(__dirname, "../client/build")));
 
+// ✅ Catch-all route - MUST BE LAST
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
-
-// Log all requests (optional)
-app.use((req, res, next) => {
-  console.log(req.method, req.url);
-  next();
 });
 
 app.listen(port, () => {
