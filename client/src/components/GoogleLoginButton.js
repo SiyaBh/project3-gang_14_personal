@@ -8,17 +8,21 @@ export default function GoogleLoginButton() {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
     const handleSuccess = async (response) => {
         try {
-            const res = await axios.post("http://localhost:3001/auth/google", {
-            credential: response.credential
+            console.log("Attempting login to:", `${API_URL}/api/auth/google`);
+            
+            const res = await axios.post(`${API_URL}/api/auth/google`, {
+                credential: response.credential
             });
 
             const userData = {
-            name: res.data.name,
-            email: res.data.email,
-            role: res.data.role.toLowerCase(), // normalize role to lowercase
-            picture: res.data.picture
+                name: res.data.name,
+                email: res.data.email,
+                role: res.data.role.toLowerCase(),
+                picture: res.data.picture
             };
 
             login(userData);
@@ -27,6 +31,7 @@ export default function GoogleLoginButton() {
             else if (userData.role === "cashier") navigate("/cashier");
 
         } catch (err) {
+            console.error("Login error:", err.response?.data || err.message);
             alert("Unauthorized Employee");
         }
     };
