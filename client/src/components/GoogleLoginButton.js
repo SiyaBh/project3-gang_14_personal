@@ -12,9 +12,9 @@ export default function GoogleLoginButton() {
 
     const handleSuccess = async (response) => {
         try {
-            console.log("Attempting login to:", `${API_URL}/api/auth/google`);
-            
-            const res = await axios.post(`${API_URL}/api/auth/google`, {
+            console.log("Attempting login to:", `${API_URL}/auth/google`);
+
+            const res = await axios.post(`${API_URL}/auth/google`, {
                 credential: response.credential
             });
 
