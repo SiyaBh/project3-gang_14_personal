@@ -1,10 +1,11 @@
 .cashier-dashboard .order-panel {
-    position: fixed;
+  position: fixed;
   top: 0;
   right: 0;
-  width: 300px;
+  width: 400px;
   height: 100%;
   z-index: 50;
+  padding: 20px;
 }
 .cashier-dashboard .order-title {
   font-size: 1.5rem;
