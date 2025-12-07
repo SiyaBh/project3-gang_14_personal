@@ -1,24 +1,23 @@
 .dashboard-container {
   display: flex;
   flex-direction: row;
-  height: 100vh; /* full height */
+  height: 100vh; 
   overflow: hidden;
 }
 
 .left-section {
-  flex: 1; /* menu section takes remaining space */
+  flex: 1; 
   padding: 20px;
   overflow-y: auto;
 }
 
 .right-section {
-  width: 400px; /* fixed width for order panel */
+  width: 400px;
   padding: 20px;
   background-color: #f9f9f9;
   overflow-y: auto;
 }
 
-/* Header */
 .dashboard-header {
   font-size:xx-large;
   font-weight: 600;    
@@ -31,7 +30,6 @@
   left: 20px;  
 }
 
-/* Logout button */
 .logout-button {
   display: flex;
   align-items: center;

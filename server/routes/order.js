@@ -21,21 +21,21 @@ pool.on('connect', (client) => {
 // Get all orders with drinks 
 router.get('/', async (req, res) => {
   try {
-    const ordersResult = await pool.query('SELECT * FROM orders ORDER BY order_id DESC');
-    const orders = ordersResult.rows;
+    const ordersResult = await pool.query('SELECT order_id, total_order_price FROM orders ORDER BY order_id DESC;');
+    // const orders = ordersResult.rows;
 
-    for (let order of orders) {
-      const drinksResult = await pool.query(
-        `SELECT d.product_name, od.price, d.product_id
-         FROM order_drink od 
-         JOIN drink d ON od.product_id = d.product_id 
-         WHERE od.order_id = $1`,
-        [order.order_id]
-      );
-      order.drinks = drinksResult.rows;
-    }
+    // for (let order of orders) {
+    //   const drinksResult = await pool.query(
+    //     `SELECT d.product_name, od.price, d.product_id
+    //      FROM order_drink od 
+    //      JOIN drink d ON od.product_id = d.product_id 
+    //      WHERE od.order_id = $1`,
+    //     [order.order_id]
+    //   );
+    //   order.drinks = drinksResult.rows;
+    // }
 
-    res.json(orders);
+    res.json(ordersResult.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch orders' });

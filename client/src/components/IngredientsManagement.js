@@ -112,10 +112,19 @@ export default function IngredientsManagement() {
           />
           <input
             type="number"
-            step="0.01"
+            step="1"
             placeholder="Stock"
             value={formData.stock}
-            onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "") {
+                setFormData({ ...formData, stock: "" });
+                return;
+              }
+              if(/^\d+$/.test(value)) {
+                setFormData({ ...formData, stock: value });
+              }
+            }}
             style={{
               padding: '10px',
               borderRadius: '4px',

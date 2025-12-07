@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { getDrinks, addDrink, updateDrink, deleteDrink } from "../api/drinks";
 import { Plus, Edit2, Trash2, Save, X, RefreshCw } from 'lucide-react';
-//import { supabase } from "../api/supabaseClient";
-import { uploadImage } from "../api/upload";
+import { supabase } from "../api/supabaseClient";
+//import { uploadImage } from "../api/upload";
 
 const colors = {
   primary: '#BF1834',
@@ -52,7 +52,6 @@ export default function DrinksManagement() {
   };
 
   const handleUpdate = (updatedItem) => {
-    console.log("🔍 handleUpdate payload:", updatedItem); 
     setLoading(true);
     setError(null);
     updateDrink(updatedItem.product_name, updatedItem)
@@ -92,46 +91,26 @@ export default function DrinksManagement() {
     });
     const [uploading, setUploading] = useState(false);
 
-    // const fileChange = async (e) => { //supabase code
-    //   const file = e.target.files[0];
-    //   if(!file) {
-    //     return;
-    //   }
-    //   setUploading(true);
-    //   try {
-    //     const filePath = `${Date.now()}-${file.name}`;
-    //     const {error: uploadError} = await supabase.storage
-    //     .from("menu_images").upload(filePath, file);
-    //     if(uploadError) {
-    //       console.error(uploadError);
-    //       alert("Upload failed");
-    //       return;
-    //     }
-    //     const {data: publicData} = supabase.storage
-    //     .from("menu_images").getPublicUrl(filePath);
-    //     setFormData(prev => ({
-    //       ...prev, image_url: publicData.publicUrl
-    //     }))
-    //   } finally {
-    //     setUploading(false);
-    //   }
-    // };
-
-    const fileChange = async (e) => { //Multer
+    const fileChange = async (e) => { //supabase code
       const file = e.target.files[0];
-      if (!file) return;
-
+      if(!file) {
+        return;
+      }
       setUploading(true);
-
       try {
-        const imageUrl = await uploadImage(file);
-        console.log("🔥 Uploaded image URL:", imageUrl);
-
-        setFormData((prev) => ({
-          ...prev,
-          image_url: imageUrl,  
-        }));
-        console.log("SETTING formData.image_url TO:", imageUrl);
+        const filePath = `${Date.now()}-${file.name}`;
+        const {error: uploadError} = await supabase.storage
+        .from("menu_images").upload(filePath, file);
+        if(uploadError) {
+          console.error(uploadError);
+          alert("Upload failed");
+          return;
+        }
+        const {data: publicData} = supabase.storage
+        .from("menu_images").getPublicUrl(filePath);
+        setFormData(prev => ({
+          ...prev, image_url: publicData.publicUrl
+        }))
       } catch (err) {
         console.error(err);
         alert("Upload error");
@@ -139,6 +118,28 @@ export default function DrinksManagement() {
         setUploading(false);
       }
     };
+
+    // const fileChange = async (e) => { //Multer
+    //   const file = e.target.files[0];
+    //   if (!file) return;
+
+    //   setUploading(true);
+
+    //   try {
+    //     const imageUrl = await uploadImage(file);
+
+    //     setFormData((prev) => ({
+    //       ...prev,
+    //       image_url: imageUrl,  
+    //     }));
+    //     // console.log("SETTING formData.image_url TO:", imageUrl);
+    //   } catch (err) {
+    //     console.error(err);
+    //     alert("Upload error");
+    //   } finally {
+    //     setUploading(false);
+    //   }
+    // };
 
 
     return (
@@ -215,6 +216,17 @@ export default function DrinksManagement() {
               border: `1px solid ${colors.dark}`,
             }}
           /> */}
+          <textarea
+          placeholder="Description"
+          value={formData.description}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          style={{
+            gridColumn: "1 / span 2",
+            padding: "10px",
+            borderRadius: "4px",
+            border: `1px solid ${colors.dark}`,
+            minHeight: "70px"
+            }}/>
           <select
             required
             value={formData.season}
@@ -403,6 +415,7 @@ export default function DrinksManagement() {
             <tr style={{ backgroundColor: colors.primary, color: colors.secondary }}>
               <th style={{ padding: '15px', textAlign: 'left' }}>Name</th>
               <th style={{ padding: '15px', textAlign: 'left' }}>Type</th>
+              <th style={{ padding: '15px', textAlign: 'left' }}>Description</th>
               <th style={{ padding: '15px', textAlign: 'left' }}>Price</th>
               <th style={{ padding: '15px', textAlign: 'left' }}>Season</th>
               <th style={{ padding: '15px', textAlign: 'left' }}>Available Months</th>
@@ -421,6 +434,7 @@ export default function DrinksManagement() {
               >
                 <td style={{ padding: '15px', color: colors.dark }}>{drink.product_name}</td>
                 <td style={{ padding: '15px', color: colors.dark }}>{drink.product_type}</td>
+                <td style={{ padding: '15px', color: colors.dark }}>{drink.description || "—"}</td>
                 <td style={{ padding: '15px', color: colors.dark }}>${parseFloat(drink.price).toFixed(2)}</td>
                 <td style={{ padding: '15px', color: colors.dark }}>{drink.season}</td>
                 <td style={{ padding: '15px', color: colors.dark }}>{drink.available_months}</td>

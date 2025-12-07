@@ -1,0 +1,74 @@
+.kiosk-category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6px;
+  border-radius: 16px;
+  background: #dad4d0;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.12);
+}
+
+.kiosk-category-card.selected {
+  border-color: #BF1834;
+}
+.kiosk-category-card.selected .kiosk-category-name {
+  color: #BF1834;
+}
+
+.kiosk-category-card:hover {
+  transform: scale(1.03);
+}
+
+.kiosk-category-card:active {
+  transform: scale(0.97);
+}
+
+.kiosk-category-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+}
+
+.accessible .kiosk-category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6px;
+  border-radius: 16px;
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.12);
+}
+
+.accessible .kiosk-category-card.selected {
+  border-color: #000000 !important;
+  color: #FFFF00 !important;
+  
+}
+.accessible .kiosk-category-card.selected .kiosk-category-name {
+  color: #FFFF00;
+}
+
+.accessible .kiosk-category-card:hover {
+  transform: scale(1.03);
+}
+
+.accessible .kiosk-category-card:active {
+  transform: scale(0.97);
+}
+
+.accessible .kiosk-category-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: #FFFF00;
+}

@@ -25,7 +25,8 @@ router.get('/', async (req, res) => {
     price,
     season,
     available_months,
-    image_url
+    image_url,
+    description
 FROM
     menu;`);
     res.json(result.rows); // rows is an array
@@ -38,10 +39,10 @@ FROM
 
 
 router.post('/', async (req, res) => {
-    const { product_name, price, product_type, season, available_months, image_url } = req.body;
+    const { product_name, price, product_type, season, available_months, image_url, description} = req.body;
     try {
         const result = await pool.query(
-            'INSERT INTO menu (product_name, price, product_type, season, available_months, image_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', 
+            'INSERT INTO menu (product_name, price, product_type, season, available_months, image_url, description) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', 
             [product_name, price, product_type, season, available_months, image_url]
         );
         res.json(result.rows[0]);
@@ -54,7 +55,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:product_name', async (req, res) => {
     const { product_name } = req.params;
-    const { price, product_type, season, available_months, image_url } = req.body;
+    const { price, product_type, season, available_months, image_url, description } = req.body;
 
      console.log("🔍 PUT /api/drinks body:", req.body);
 
@@ -66,9 +67,10 @@ router.put('/:product_name', async (req, res) => {
                  season = $3, 
                  available_months = $4,
                  image_url = $5
-             WHERE product_name = $6
+                 description = $6
+             WHERE product_name = $7
              RETURNING *`,
-            [price, product_type, season, available_months, image_url, product_name]
+            [price, product_type, season, available_months, image_url, description, product_name]
         );
 
         if (result.rowCount === 0) {

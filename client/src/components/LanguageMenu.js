@@ -1,4 +1,5 @@
 import { useTranslation } from "../context/TranslationContext";
+import T from "./T";
 
 export default function LanguageSwitcher() {
   const { language, setLanguage } = useTranslation();
@@ -7,10 +8,9 @@ export default function LanguageSwitcher() {
     <select
       value={language}
       onChange={(e) => setLanguage(e.target.value)}
-      style={{ padding: "8px", margin: "10px" }}
     >
-      <option value="en">English</option>
-      <option value="es">Español</option>
+      <option value="en"><T text = "English"/></option>
+      <option value="es"><T text = "Spanish"/></option>
     </select>
   );
 }

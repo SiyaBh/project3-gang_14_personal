@@ -7,6 +7,7 @@ import KioskMenu from "./pages/kiosk/KioskMenu";
 import KioskOrderPage from "./pages/kiosk/KioskOrderPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import Portal from "./pages/portal/Portal";
 
 import { TranslationProvider } from "./context/TranslationContext";
 import React, { useState, useEffect, useMemo } from "react";
@@ -25,7 +26,8 @@ export default function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<Welcome />} />
+            <Route path="/" element={<Portal />} />
+            <Route path="/welcome" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route 
               path="/cashier"
@@ -44,7 +46,7 @@ export default function App() {
               }
             />
             <Route 
-              path="/kiosk" 
+              path="/welcome/kiosk" 
               element={
                 <KioskMenu 
                   orderItems={orderItems} 
@@ -53,7 +55,7 @@ export default function App() {
               } 
             />
             <Route 
-              path="/kiosk/order" 
+              path="/welcome/kiosk/order" 
               element={
                 <KioskOrderPage 
                   orderItems={orderItems} 

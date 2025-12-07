@@ -42,7 +42,7 @@ router.get('/x-report', async (req, res) => {
              COUNT(o.order_id) AS total_orders
       FROM orders o
       WHERE o.order_date = CURRENT_DATE
-        AND o.order_time BETWEEN TIME '11:00' AND TIME '22:59:59.999999'
+        AND o.order_time BETWEEN TIME '8:00' AND TIME '22:59:59.999999'
       GROUP BY hour
       ORDER BY hour;
     `);
@@ -69,7 +69,7 @@ router.get('/z-report', async (req, res) => {
              COUNT(o.order_id) AS total_orders
       FROM orders o
       WHERE o.order_date = CURRENT_DATE
-        AND o.order_time BETWEEN TIME '11:00' AND TIME '22:59:59.999999'
+        AND o.order_time BETWEEN TIME '8:00' AND TIME '22:59:59.999999'
       GROUP BY hour
       ORDER BY hour;
     `);

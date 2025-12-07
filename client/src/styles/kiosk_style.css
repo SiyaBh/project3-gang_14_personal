@@ -1,119 +1,174 @@
-
 .kiosk {
-  background-color:#103754;
+  background-color: #d7888f7a;
   min-height: 100vh;
   padding: 20px;
-  color: #000; 
+  color: #020202;
   font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-/* Heading */
+ :root {
+  --kiosk-sidebar-width: 362px; 
+}
+
 .kiosk h1 {
-  color: #fece8c; 
+  color: #333;
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Tabs container */
-.kiosk .tabs-container {
-  border-bottom: 2px solid #fece8c; 
-  justify-content: center;
+/* Container for sidebar and main content */
+.kiosk-layout {
+  display: flex;        
+
+  /* width subtracts the fixed sidebar so total doesn't exceed viewport */
+  width: calc(100% - var(--kiosk-sidebar-width));
+  flex: 1;                
+  gap: 20px;              
+
+  /* When sidebar is fixed, add left padding so content starts after it */
+  margin-left: var(--kiosk-sidebar-width) ;
+  overflow-x: hidden;
 }
 
-/* Tab styles */
-.kiosk .tab {
-  background: #fff;          
-  color: #B43F3F;             
-  font-weight: 500;
-  font-size: 0.9rem;  
-  padding: 0.2rem 0.75rem;
-  border: 2px solid #fece8c;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: background-c
-}
-.kiosk  .order_button{
-  background-color: #FFFFFF;
-  color: #BF1834;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 16px;
-  transition: all 0.3s;
-  text-align: center;
-  display: block;
-  margin: 20px auto 0 auto;
+.kiosk-content {
+  flex: 1;                 
+  display: flex;
+  flex-direction: column; 
+  min-width: 0;             
+  overflow-x: hidden;    
 }
 
 .kiosk .menu-grid {
   display: grid;
-  grid-template-columns: repeat(2, 350px); 
-  gap: 100px 400px;                        
+  grid-template-columns: repeat(3, 300px);                         
   justify-content: center;                 
-  margin-top: 20px;
+  padding-top: 20px;
+  align-items: center;
+  width: 100%;
+  gap: 25px;
+  overflow-x: hidden;
+  padding-bottom: 120px;
 }
 
-
 .kiosk .menu-item-card {
-  width: 100%;      
-  height: 200px;
+  height: 250px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding: 12px;
   border-radius: 12px;
-  background-color: cornsilk;
+  background-color: #F5EEE8;
   box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
   cursor: pointer;
   text-align: center;
-  border: 2px solid #fece8c;
+  border-width: 5px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-
 .kiosk .menu-item-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  border-color: #B43F3F;              
+  background-color: #fff5ef;           
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.18),
+    0 0 0 4px rgba(180, 63, 63, 0.35); 
+  transform: translateY(-3px) scale(1.02); 
 }
+
+.kiosk .menu-item-card:hover .menu-item-name {
+  color: #B43F3F;
+  font-weight: 700;
+}
+
+.menu-item-card:hover .menu-item-image {
+  transform: scale(1.08);
+  transition: transform 0.2s;
+}
+
 .kiosk .menu-item-price {
   font-size: 1.5rem;        
   font-weight: 600;
   margin-top: auto;  
 }
-.kiosk .kiosk-search-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  gap: 15px;          
-  margin-top: 60px;   
-}
 
 .kiosk .kiosk-search-bar {
-  width: 60%;
-  max-width: 400px;
+  width: 70%;
+  max-width: 900px;
   padding: 10px 15px;
-  margin: 20px auto;
+  margin: 0px auto;
+  margin-bottom: 20px;
+  margin-bottom: 20px;
   display: block;
-  border: 2px solid #fece8c;
-  border-radius: 8px;
+  border: 2px solid #BF1834;
+  border-radius: 50px;
   font-size: 16px;
+  background-color: #fff5ef;
+  height: 45px;
+  font-size: 1.2em;
+  font-family: 'Poppins', sans-serif;
 }
+
+.kiosk-footer {
+  position: fixed;
+  bottom: 0;
+  left: var(--kiosk-sidebar-width);  
+  right: 0;
+  height: 90px;                       
+  background-color: #BF1834;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0;                 
+  transition: background-color 0.15s ease;
+}
+
+.kiosk-footer:hover {
+  background-color: #D6454D;
+}
+
+.kiosk .customer-name{
+  font-size: x-large;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.accessible .kiosk .customer-name{
+  font-size: x-large;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+}
+
+.kiosk-footer:active {
+  background-color: #8F1227; 
+  transform: translateY(1px);
+}
+
+/* Accesibility Mode */
 
 .accessible .kiosk {
   background-color: #000000 !important;
   color: #FFFF00 !important;
 }
 
-/* Heading */
 .accessible .kiosk h1 {
   color: #FFFF00 !important;
   font-size: 40px !important;
 }
 
-/* Category tabs */
 .accessible .kiosk .tab {
   background-color: #FFFF00 !important;
   color: #000000 !important;
@@ -121,35 +176,57 @@
   font-size: 20px !important;
 }
 
-/* Menu cards */
 .accessible .kiosk .menu-item-card {
   background-color: #000000 !important;
   color: #FFFF00 !important;
   border: 2px solid #FFFF00 !important;
 }
 
-/* Price text */
 .accessible .kiosk .menu-item-price {
   color: #FFFF00 !important;
 }
 
-/* Search bar */
 .accessible .kiosk .kiosk-search-bar {
   background-color: #000000 !important;
   color: #FFFF00 !important;
   border: 2px solid #FFFF00 !important;
 }
 
-/* Checkout button */
 .accessible .kiosk .order_button {
   background-color: #FFFF00 !important;
   color: #000000 !important;
   font-size: 20px !important;
 }
 
-/* Menu item name text */
 .accessible .kiosk .menu-item-card h3,
 .accessible .kiosk .menu-item-card p,
 .accessible .kiosk .menu-item-card * {
   color: #FFFF00 !important;
+}
+
+.accessible .kiosk-footer {
+  position: fixed;
+  bottom: 0;
+  left: var(--kiosk-sidebar-width);  
+  right: 0;
+  height: 90px;                       
+  background-color: #FFFF00 ;
+  color: black;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0;                 
+  transition: background-color 0.15s ease;
+  border-color: #000000;
+  border-width: 10px;
+  border-style: solid;
+}
+
+.accessible .kiosk-footer:hover {
+  background-color: #FFFF00 ;
+
 }

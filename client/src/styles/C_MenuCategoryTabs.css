@@ -1,13 +1,11 @@
-/* Container for the tabs */
 .tabs-container {
   display: flex;
-  gap: 1rem; /* space between tabs */
-  border-bottom: 2px solid #020202; /* line underneath all tabs */
+  gap: 1rem;
+  border-bottom: 2px solid #020202;
   padding-bottom: 0.75rem;
   margin-bottom: 2rem;
 }
 
-/* Default tab */
 .tab {
   font-weight: 500;
   font-size: large;
@@ -16,13 +14,12 @@
   border: none;
   color: black;
   cursor: pointer;
-  border-radius: 9999px; /* for when selected */
+  border-radius: 9999px; 
   transition: background-color 0.2s, color 0.2s;
   font-family: 'Poppins', sans-serif; 
 }
 
-/* Selected tab */
 .tab.selected {
-  background-color: #3C2A21; /* brown */
+  background-color: #3C2A21; 
   color: white;
 }

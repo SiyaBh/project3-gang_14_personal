@@ -2,7 +2,7 @@
     position: fixed;
   top: 0;
   right: 0;
-  width: 380px;
+  width: 300px;
   height: 100%;
   z-index: 50;
 }
@@ -55,7 +55,7 @@
 .cashier-dashboard .quantity-btn {
   width: 36px;
   height: 36px;
-  border: 2px solid #B43F3F; /* red border */
+  border: 2px solid #B43F3F; 
   border-radius: 8px;
   background-color: #fff;
   color: #BF1834;
@@ -106,6 +106,7 @@
   align-items: center;
   margin-top: 12px;
   padding-top: 10px;
+  gap: 100px;
 }
 
 .cashier-dashboard .total {

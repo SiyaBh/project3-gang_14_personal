@@ -1,7 +1,6 @@
-/* Grid container for all menu items */
 .menu-grid {
   display: flex;
-  flex-wrap: wrap;      /* wrap cards to next line */
-  gap: 16px;            /* consistent spacing between cards */
-  justify-content: flex-start; /* align left */
+  flex-wrap: wrap;     
+  gap: 16px;        
+  justify-content: flex-start;
 }
