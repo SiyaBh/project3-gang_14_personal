@@ -54,10 +54,10 @@ export default function DrinksManagement() {
   const handleUpdate = (updatedItem) => {
     setLoading(true);
     setError(null);
-    updateDrink(updatedItem.product_name, updatedItem)
+    updateDrink(updatedItem.menu_id, updatedItem)
       .then(() => {
         setDrinks(prev => prev.map(d => 
-          d.product_name === updatedItem.product_name ? updatedItem : d
+          d.menu_id === updatedItem.menu_id ? updatedItem : d
         ));
         setEditingItem(null);
         setLoading(false);
@@ -68,11 +68,11 @@ export default function DrinksManagement() {
       });
   };
 
-  const handleDelete = (product_name) => {
+  const handleDelete = (menu_id) => {
     if (!window.confirm('Are you sure you want to delete this drink?')) return;
     setLoading(true);
     setError(null);
-    deleteDrink(product_name)
+    deleteDrink(menu_id)
       .then(() => fetchDrinks())
       .catch((err) => {
         setError(err.message || 'Failed to delete drink');
@@ -82,6 +82,7 @@ export default function DrinksManagement() {
 
   const DrinkForm = ({ item, onSave, onCancel, isEdit }) => {
     const [formData, setFormData] = useState(item || {
+      menu_id: 1,
       product_name: '',
       price: '',
       product_type: '',
@@ -120,28 +121,6 @@ export default function DrinksManagement() {
       }
     };
 
-    // const fileChange = async (e) => { //Multer
-    //   const file = e.target.files[0];
-    //   if (!file) return;
-
-    //   setUploading(true);
-
-    //   try {
-    //     const imageUrl = await uploadImage(file);
-
-    //     setFormData((prev) => ({
-    //       ...prev,
-    //       image_url: imageUrl,  
-    //     }));
-    //     // console.log("SETTING formData.image_url TO:", imageUrl);
-    //   } catch (err) {
-    //     console.error(err);
-    //     alert("Upload error");
-    //   } finally {
-    //     setUploading(false);
-    //   }
-    // };
-
 
     return (
       <div style={{
@@ -177,17 +156,6 @@ export default function DrinksManagement() {
               border: `1px solid ${colors.dark}`,
             }}
           />
-          {/* <input
-            type="text"
-            placeholder="Type"
-            value={formData.product_type}
-            onChange={(e) => setFormData({ ...formData, product_type: e.target.value })}
-            style={{
-              padding: '10px',
-              borderRadius: '4px',
-              border: `1px solid ${colors.dark}`,
-            }}
-          /> */}
           <select
             required
             value={formData.product_type}
@@ -206,17 +174,6 @@ export default function DrinksManagement() {
             <option value="Matcha">Matcha</option>
             <option value="Ice Blended">Ice Blended</option>
           </select>
-          {/* <input
-            type="text"
-            placeholder="Season"
-            value={formData.season}
-            onChange={(e) => setFormData({ ...formData, season: e.target.value })}
-            style={{
-              padding: '10px',
-              borderRadius: '4px',
-              border: `1px solid ${colors.dark}`,
-            }}
-          /> */}
           <textarea
           placeholder="Description"
           value={formData.description}
@@ -245,17 +202,6 @@ export default function DrinksManagement() {
             <option value="Year-Round">Year-Round</option>
             <option value="Seasonal">Seasonal</option>
           </select>
-          {/* <input
-            type="text"
-            placeholder="Available Months"
-            value={formData.available_months}
-            onChange={(e) => setFormData({ ...formData, available_months: e.target.value })}
-            style={{
-              padding: '10px',
-              borderRadius: '4px',
-              border: `1px solid ${colors.dark}`,
-            }}
-          /> */}
           <select
               required
               value={formData.available_months}
@@ -472,7 +418,7 @@ export default function DrinksManagement() {
                     <Edit2 size={16} />
                   </button>
                   <button
-                    onClick={() => handleDelete(drink.product_name)}
+                    onClick={() => handleDelete(drink.menu_id)}
                     style={{
                       backgroundColor: colors.primary,
                       color: colors.secondary,

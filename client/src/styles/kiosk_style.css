@@ -1,13 +1,25 @@
 .kiosk {
-  background-color: #d7888f7a;
-  min-height: 100vh;
-  padding: 20px;
-  color: #020202;
-  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
+  height: 100vh;      
   width: 100%;
-  overflow-x: hidden;
+  padding: 1.25rem;
+  background-color: #d7888f7a;
+  color: #020202;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;    
+  box-sizing: border-box;
+
+}
+
+.kiosk-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  gap: 1.25rem;
+  background-color: #F5EEE8;
+  flex-shrink: 0;
 }
 
  :root {
@@ -20,54 +32,67 @@
   margin-bottom: 20px;
 }
 
-/* Container for sidebar and main content */
 .kiosk-layout {
-  display: flex;        
-
-  /* width subtracts the fixed sidebar so total doesn't exceed viewport */
-  width: calc(100% - var(--kiosk-sidebar-width));
-  flex: 1;                
-  gap: 20px;              
-
-  /* When sidebar is fixed, add left padding so content starts after it */
-  margin-left: var(--kiosk-sidebar-width) ;
-  overflow-x: hidden;
+  display: flex;
+  flex: 1;            
+  width: 100%;
+  overflow: hidden;   
+  box-sizing: border-box;
 }
 
 .kiosk-content {
-  flex: 1;                 
+  margin-left: clamp(15rem, 22vw, 25rem); 
+  flex: 1;
   display: flex;
-  flex-direction: column; 
-  min-width: 0;             
-  overflow-x: hidden;    
+  flex-direction: column;
+  padding: 1rem;
+  overflow-y: auto;   
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .kiosk .menu-grid {
   display: grid;
-  grid-template-columns: repeat(3, 300px);                         
-  justify-content: center;                 
-  padding-top: 20px;
-  align-items: center;
+  grid-template-columns: repeat(3, minmax(12rem, 1fr)); 
+  gap: 1.5rem;             
   width: 100%;
-  gap: 25px;
+  justify-items: center;   
+  justify-content: start;  
+  padding: 3rem;
+  padding-bottom: 7rem;
   overflow-x: hidden;
-  padding-bottom: 120px;
+  box-sizing: border-box;
+}
+
+/* Responsive: 2 cards per row on medium screens */
+@media (max-width: 80rem) {
+  .kiosk .menu-grid {
+    grid-template-columns: repeat(2, minmax(12rem, 1fr));
+  }
+}
+
+/* Responsive: 1 card per row on small screens */
+@media (max-width: 50rem) {
+  .kiosk .menu-grid {
+    grid-template-columns: repeat(1, minmax(12rem, 1fr));
+  }
 }
 
 .kiosk .menu-item-card {
   height: 250px;
-  width: 250px;
+  width: 100%;
+  max-width: 16rem;      
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
   background-color: #F5EEE8;
   box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
   cursor: pointer;
   text-align: center;
-  border-width: 5px;
+  border-width: 0.3125rem;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -116,20 +141,18 @@
 .kiosk-footer {
   position: fixed;
   bottom: 0;
-  left: var(--kiosk-sidebar-width);  
+  left: clamp(15rem, 22vw, 25rem); 
   right: 0;
-  height: 90px;                       
+  height: clamp(5rem, 7vh, 6rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.25rem;
   background-color: #BF1834;
   color: #fff;
-  font-size: 22px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  user-select: none;
-  border-radius: 0;                 
-  transition: background-color 0.15s ease;
+  z-index: 5;
 }
 
 .kiosk-footer:hover {
@@ -167,6 +190,10 @@
 .accessible .kiosk h1 {
   color: #FFFF00 !important;
   font-size: 40px !important;
+}
+
+.accessible .kiosk-header {
+  background-color: #FFFF00 !important;
 }
 
 .accessible .kiosk .tab {

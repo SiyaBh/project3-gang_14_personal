@@ -10,10 +10,6 @@ import K_CategoryGrid from "../../components/KisokMenu/K_CategorySidebar";
 import { useLocation } from "react-router-dom";
 
 
-
-
-
-
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -131,11 +127,13 @@ export default function KioskMenu({ orderItems, setOrderItems }) {
         <div className="kiosk-layout">
           {/* Sidebar */}
           <div className="kiosk-category-sidebar">
-            <div className = "icon-container">
-            <img src = "/images/home-icon.png" alt="Home Icon" className="kiosk-home-icon" onClick={handleLogoCilck}/>
-            <span className="home-text" onClick={handleLogoCilck}><T text="Home"/></span>
+            <div className="kiosk-header">
+              <div className = "icon-container">
+              <img src = "/images/home-icon.png" alt="Home Icon" className="kiosk-home-icon" onClick={handleLogoCilck}/>
+              <span className="home-text" onClick={handleLogoCilck}><T text="Home"/></span>
+              </div>
+              <img src = "/images/boba_by_taele.png" alt="Boba by Taele Logo" className="kiosk-logo" />
             </div>
-            <img src = "/images/boba_by_taele.png" alt="Boba by Taele Logo" className="kiosk-logo" />
             <div className="customer-name">
               <T text="Welcome," /> {customerName}!
             </div>

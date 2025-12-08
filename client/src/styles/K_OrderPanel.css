@@ -12,7 +12,7 @@
   overflow-y: hidden;
   max-height: 85vh;
   min-height: 85vh;  
-  height: auto;
+  height: 100%;
 }
 
 .order-items {

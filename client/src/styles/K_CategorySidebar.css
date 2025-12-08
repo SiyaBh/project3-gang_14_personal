@@ -1,35 +1,33 @@
-.kiosk-category-sidebar {
-  width: var(--kiosk-sidebar-width, 300px);              
-  min-height: 100vh;        
-  background: #F5EEE8;
-  padding: 20px 30px;
+.kiosk-category-sidebar {          
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: clamp(15rem, 22vw, 25rem);
+  background-color: #F5EEE8;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  position: fixed;          
-  left: 0;
-  top: 0;
+  gap: 1rem;
+  padding: 2rem;
   box-sizing: border-box;
+  overflow-y: auto;          
 }
 
 .kiosk-category-grid {
   display: flex;
   flex-direction: column;  
-  gap: 30px;
-  width: 100%;
+  gap: 2vh;
+  flex: 1;
+  justify-content: space-evenly;
 }
 
 .kiosk-logo {
-  width: 235px;
-  height: 200px;
-  margin-bottom: 20px;
+  width: clamp(6rem, 10vw, 10rem); 
+  aspect-ratio: 1;               
   border-radius: 50%;
-  border-width: 3px;
-  border-style: solid;
-  border-color: #BF1834;
-  margin: 0 auto 20px auto;
-  display: block;  
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  border: 0.2rem solid #BF1834;
+  object-fit: cover;               
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .icon-container {

@@ -20,6 +20,7 @@ const pool = new Pool({
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query(`SELECT
+    menu_id,
     product_name,
     product_type,
     price,
@@ -53,22 +54,23 @@ router.post('/', async (req, res) => {
 });
 
 
-router.put('/:product_name', async (req, res) => {
-    const { product_name } = req.params;
-    const { price, product_type, season, available_months, image_url, description } = req.body;
+router.put('/:menu_id', async (req, res) => {
+    const { menu_id } = req.params;
+    const { product_name, price, product_type, season, available_months, image_url, description } = req.body;
 
     try {
         const result = await pool.query(
             `UPDATE menu 
-             SET price = $1, 
-                 product_type = $2, 
-                 season = $3, 
-                 available_months = $4,
-                 image_url = $5,
-                 description = $6
-             WHERE product_name = $7
+             SET product_name = $1,
+                 price = $2, 
+                 product_type = $3, 
+                 season = $4, 
+                 available_months = $5,
+                 image_url = $6,
+                 description = $7
+             WHERE menu_id = $8
              RETURNING *`,
-            [price, product_type, season, available_months, image_url, description, product_name]
+            [product_name, price, product_type, season, available_months, image_url, description, menu_id]
         );
 
         if (result.rowCount === 0) {
@@ -88,21 +90,21 @@ router.put('/:product_name', async (req, res) => {
 
 
 
-router.delete('/:product_name', async (req, res) => {
-    const { product_name } = req.params;
+router.delete('/:menu_id', async (req, res) => {
+    const { menu_id } = req.params;
 
     try {
         const result = await pool.query(
-            'DELETE FROM menu WHERE product_name = $1 RETURNING *',
-            [product_name]
+            'DELETE FROM menu WHERE menu_id = $1 RETURNING *',
+            [menu_id]
         );
 
         if (result.rowCount === 0) {
-            return res.status(404).json({ error: 'No drinks found with that name' });
+            return res.status(404).json({ error: 'No drinks found with that ID' });
         }
 
         res.json({
-            message: `Deleted ${result.rowCount} drink(s) with name "${product_name}".`,
+            message: `Deleted ${result.rowCount} drink(s) with id "${menu_id}".`,
             deletedDrinks: result.rows
         });
     } catch (err) {
