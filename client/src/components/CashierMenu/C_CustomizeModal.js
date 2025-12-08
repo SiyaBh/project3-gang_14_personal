@@ -10,6 +10,7 @@ export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
     sugar: "100%",
     ice: "Regular",
     toppings: [],
+    cupSizes: "Small",
     misc: [],
     temperature: "Cold",
   });
@@ -32,6 +33,11 @@ export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
     { name: "Honey Jelly", price: 0.75 },
     { name: "Peach Popping", price: 0.75 },
     { name: "Fresh Milk", price: 0.75 }
+  ];
+  const cupSizes = [
+  { name: "Small", price: 0 },
+  { name: "Medium", price: 1 },
+  { name: "Large", price: 2 }
   ];
   const miscOptions = [
   { name: "Double Toppings", price: 0.75 },
@@ -103,6 +109,12 @@ export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
             break;
           }
         }
+        for (let i = 0; i < cupSizes.length; i++) {
+          if (cupSizes[i].name === options.cupSize) {
+            total += cupSizes[i].price;
+            break;
+          }
+        }
         // If found, add its price to total
         if (found !== null) {
           total += found.price;
@@ -137,7 +149,7 @@ const handleAdd = () => {
   const customizedItem = {
     name: item.product_name,           // drink name
     category: item.product_type,   // drink type/category 
-    options: { ...options },   // sugar, ice, toppings, misc, temperature
+    options: { ...options },   // sugar, ice, toppings, misc, temperature and cup size
     totalPrice: Number(totalPrice), // total including extras
     quantity: 1,               // default
   };
@@ -202,7 +214,19 @@ return (
         ))}
       </div>
     </div>
-
+    <div className="option-selection">
+      <label className="option-label"><T text="Cup Sizes"/></label>
+      <div className="option-buttons">
+        {cupSizes.map((size) => (
+          <button
+            key={size.name}
+            className={`option-btn ${options.cupSizes === size.name ? "selected" : ""}`}
+            onClick={() => handleSelect("cupSize", size.name)}
+          >
+            <T text={size.name} /> {size.price > 0 ? `(+\$${size.price})` : ""}
+          </button>))}
+      </div>
+    </div>
     {/* Misc Options (multi-select) */}
     <div className="option-section">
       <label className="option-label"><T text = "Misc Options"/></label>
