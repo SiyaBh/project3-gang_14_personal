@@ -121,11 +121,13 @@ export default function CashierDashboard() {
           onChange={(e) => setSearch(e.target.value)}
           style={{
             padding: "8px",
-            width: "786px",
+            width: "100%",
+            maxWidth: "100%",
             borderRadius: "20px",
             marginBottom: "20px",
             border: "2px solid grey",
             fontFamily: "'Poppins', sans-serif", 
+            boxSizing: "border-box", 
           }}
         />
         <C_MenuCategoryTabs selected={category} onSelect={setCategory} />

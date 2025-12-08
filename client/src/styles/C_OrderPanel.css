@@ -1,27 +1,27 @@
 .cashier-dashboard .order-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 400px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   height: 100%;
-  z-index: 50;
-  padding: 20px;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow: hidden; 
 }
 .cashier-dashboard .order-title {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #020202
+  color: #312e2e
 }
 
 .cashier-dashboard .order-items {
   flex: 1;
-  max-height: 700px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  max-height: calc(100vh - 200px);
 }
 
 .cashier-dashboard .order-item {
@@ -102,12 +102,18 @@
 }
 
 .cashier-dashboard .order-footer {
+  position: sticky;
+  bottom: 0;
+  background: #f9f9f9;    
+  padding-top: 10px;
+  padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
-  padding-top: 10px;
-  gap: 100px;
+  gap: 1rem;
+  border-top: 2px solid #ddd;
+  box-sizing: border-box;
+  z-index: 5;
 }
 
 .cashier-dashboard .total {

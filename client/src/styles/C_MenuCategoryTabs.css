@@ -4,7 +4,9 @@
   border-bottom: 2px solid #020202;
   padding-bottom: 0.75rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;    
 }
+
 
 .tab {
   font-weight: 500;

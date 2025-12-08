@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
     try {
         const result = await pool.query(
             'INSERT INTO menu (product_name, price, product_type, season, available_months, image_url, description) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', 
-            [product_name, price, product_type, season, available_months, image_url]
+            [product_name, price, product_type, season, available_months, image_url, description]
         );
         res.json(result.rows[0]);
     } catch (err) {
@@ -66,8 +66,8 @@ router.put('/:product_name', async (req, res) => {
                  product_type = $2, 
                  season = $3, 
                  available_months = $4,
-                 image_url = $5
-                 description = $6
+                 image_url = $5,
+                 description = $6,
              WHERE product_name = $7
              RETURNING *`,
             [price, product_type, season, available_months, image_url, description, product_name]
