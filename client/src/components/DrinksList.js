@@ -87,7 +87,8 @@ export default function DrinksManagement() {
       product_type: '',
       season: '',
       available_months: '',
-      image_url: ''
+      image_url: '',
+      description: ''
     });
     const [uploading, setUploading] = useState(false);
 

@@ -57,8 +57,6 @@ router.put('/:product_name', async (req, res) => {
     const { product_name } = req.params;
     const { price, product_type, season, available_months, image_url, description } = req.body;
 
-     console.log("🔍 PUT /api/drinks body:", req.body);
-
     try {
         const result = await pool.query(
             `UPDATE menu 
@@ -67,7 +65,7 @@ router.put('/:product_name', async (req, res) => {
                  season = $3, 
                  available_months = $4,
                  image_url = $5,
-                 description = $6,
+                 description = $6
              WHERE product_name = $7
              RETURNING *`,
             [price, product_type, season, available_months, image_url, description, product_name]
