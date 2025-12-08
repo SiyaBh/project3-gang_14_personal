@@ -10,6 +10,7 @@ export default function K_CustomizeModal({ item, onClose, onAddToOrder }) {
     sugar: "100%",
     ice: "Regular",
     toppings: [],
+    cupSize: "Small",
     misc: [],
     temperature: "Cold",
   });
@@ -32,6 +33,11 @@ export default function K_CustomizeModal({ item, onClose, onAddToOrder }) {
     { name: "Honey Jelly", price: 0.75, img: "/images/topping-images/honey-jelly.png" },
     { name: "Peach Popping", price: 0.75, img: "/images/topping-images/mango-boba.png" },
     { name: "Fresh Milk", price: 0.75, img: "/images/topping-images/milk.png"}
+  ];
+  const cupSize = [
+  { name: "Small", price: 0 },
+  { name: "Medium", price: 1 },
+  { name: "Large", price: 2 }
   ];
   const miscOptions = [
   { name: "Double Toppings", price: 0.75 },
@@ -108,7 +114,13 @@ export default function K_CustomizeModal({ item, onClose, onAddToOrder }) {
           total += found.price;
         }
       }
-
+      //add cupsizes 
+      for (let i = 0; i < cupSize.length; i++) {
+          if (cupSize[i].name === options.cupSize) {
+            total += cupSize[i].price;
+            break;
+          }
+      }
       // Add prices for selected misc options
       for (let i = 0; i < options.misc.length; i++) {
         const miscName = options.misc[i];
@@ -137,7 +149,7 @@ const handleAdd = () => {
   const customizedItem = {
     name: item.product_name,           // drink name
     category: item.product_type,   // drink type/category 
-    options: { ...options },   // sugar, ice, toppings, misc, temperature
+    options: { ...options },   // sugar, ice, toppings, misc, temperature and cup size 
     totalPrice: Number(totalPrice), // total including extras
     quantity: 1,               // default
   };
@@ -226,6 +238,19 @@ return (
           </div>
         ))}
       </div>
+    </div>
+    <div className="option-section">
+      <h3 className="option-section-title"><T text="Cup Sizes"/></h3>
+      <div className="level-grid">
+            {cupSize.map((size) => (
+              <button
+              key={size.name}
+              className={`level-circle ${options.cupSize === size.name ? "selected" : ""}`}
+              onClick={() => handleSelect("cupSize", size.name)}
+            >
+              <T text={size.name} /> {size.price > 0 ? `(+\$${size.price})` : ""}
+            </button>))}
+        </div>
     </div>
 
     {/* Misc Options (multi-select) */}
