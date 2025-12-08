@@ -216,11 +216,11 @@ return (
     </div>
     <div className="option-selection">
       <label className="option-label"><T text="Cup Sizes"/></label>
-      <div className="option-buttons">
+      <div className="option-buttons size-buttons">
         {cupSizes.map((size) => (
           <button
             key={size.name}
-            className={`option-btn ${options.cupSizes === size.name ? "selected" : ""}`}
+            className={`size-circle ${options.cupSizes === size.name ? "selected" : ""}`}
             onClick={() => handleSelect("cupSize", size.name)}
           >
             <T text={size.name} /> {size.price > 0 ? `(+\$${size.price})` : ""}
