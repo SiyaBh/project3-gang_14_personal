@@ -171,3 +171,14 @@
   color: #FFFF00 !important;
   font-size: 24px !important;
 }
+.accessible .size-circle {
+  background-color: #000 !important;
+  color: #FFFF00 !important;
+  border: 3px solid #FFFF00 !important;
+}
+
+.accessible .size-circle.selected {
+  background-color: #FFFF00 !important;
+  color: #000 !important;
+}
+

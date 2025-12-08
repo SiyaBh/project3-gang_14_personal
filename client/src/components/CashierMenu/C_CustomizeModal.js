@@ -10,7 +10,7 @@ export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
     sugar: "100%",
     ice: "Regular",
     toppings: [],
-    cupSizes: "Small",
+    cupSize: "Small",
     misc: [],
     temperature: "Cold",
   });
@@ -34,7 +34,7 @@ export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
     { name: "Peach Popping", price: 0.75 },
     { name: "Fresh Milk", price: 0.75 }
   ];
-  const cupSizes = [
+  const cupSize = [
   { name: "Small", price: 0 },
   { name: "Medium", price: 1 },
   { name: "Large", price: 2 }
@@ -109,16 +109,18 @@ export default function C_CustomizeModal({ item, onClose, onAddToOrder }) {
             break;
           }
         }
-        for (let i = 0; i < cupSizes.length; i++) {
-          if (cupSizes[i].name === options.cupSize) {
-            total += cupSizes[i].price;
-            break;
-          }
-        }
+        
         // If found, add its price to total
         if (found !== null) {
           total += found.price;
         }
+      }
+      //add cupsizes 
+      for (let i = 0; i < cupSize.length; i++) {
+          if (cupSize[i].name === options.cupSize) {
+            total += cupSize[i].price;
+            break;
+          }
       }
 
       // Add prices for selected misc options
@@ -214,17 +216,17 @@ return (
         ))}
       </div>
     </div>
-    <div className="option-selection">
+    <div className="option-section">
       <label className="option-label"><T text="Cup Sizes"/></label>
-      <div className="option-buttons size-buttons">
-        {cupSizes.map((size) => (
+      <div className="option-buttons">
+        {cupSize.map((size) => (
           <button
-            key={size.name}
-            className={`size-circle ${options.cupSizes === size.name ? "selected" : ""}`}
-            onClick={() => handleSelect("cupSize", size.name)}
-          >
-            <T text={size.name} /> {size.price > 0 ? `(+\$${size.price})` : ""}
-          </button>))}
+          key={size.name}
+          className={`option-btn ${options.cupSize === size.name ? "selected" : ""}`}
+          onClick={() => handleSelect("cupSize", size.name)}
+        >
+          <T text={size.name} /> {size.price > 0 ? `(+\$${size.price})` : ""}
+        </button>))}
       </div>
     </div>
     {/* Misc Options (multi-select) */}
