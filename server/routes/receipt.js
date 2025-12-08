@@ -4,26 +4,6 @@ const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-function formatOptions(options) {
-  if (!options) return "";
-
-  const parts = [];
-
-  if (options.temperature) parts.push(`${options.temperature}`);
-  if (options.sugar) parts.push(`${options.sugar} Sugar`);
-  if (options.ice) {
-    const iceLabel = options.ice === "None" ? "No" : options.ice;
-    parts.push(`${iceLabel} Ice`);
-  }
-
-  if (options.toppings && options.toppings.length > 0)
-    parts.push(`${options.toppings.join(", ")}`);
-
-  if (options.misc && options.misc.length > 0)
-    parts.push(`${options.misc.join(", ")}`);
-
-  return parts.join(" • ");
-}
 
 function generateReceiptHtml({
   customerName,
@@ -36,7 +16,6 @@ function generateReceiptHtml({
 }) {
   const safeItems = Array.isArray(items) ? items : [];
   const itemsRows = safeItems.map((item) => {
-    const optionsText = formatOptions(item.options);
 
     return `
       <tr>
@@ -51,11 +30,11 @@ function generateReceiptHtml({
         </td>
       </tr>
 
-      ${optionsText ? `
+      ${item.options ? `
         <tr>
           <td colspan="3"
               style="padding: 0 12px 8px 12px; color: #666; font-size: 12px;">
-            ${optionsText}
+            ${item.options}
           </td>
         </tr>
       ` : ""}

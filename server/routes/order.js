@@ -18,24 +18,60 @@ pool.on('connect', (client) => {
 });
 
 
-// Get all orders with drinks 
+
 router.get('/', async (req, res) => {
   try {
-    const ordersResult = await pool.query('SELECT order_id, total_order_price FROM orders ORDER BY order_id DESC;');
-    // const orders = ordersResult.rows;
+    const ordersResult = await pool.query(`
+      SELECT order_id, total_order_price
+      FROM orders
+      ORDER BY order_id DESC
+      LIMIT 5;
+    `);
 
-    // for (let order of orders) {
-    //   const drinksResult = await pool.query(
-    //     `SELECT d.product_name, od.price, d.product_id
-    //      FROM order_drink od 
-    //      JOIN drink d ON od.product_id = d.product_id 
-    //      WHERE od.order_id = $1`,
-    //     [order.order_id]
-    //   );
-    //   order.drinks = drinksResult.rows;
-    // }
+    const orders = ordersResult.rows;
 
-    res.json(ordersResult.rows);
+    for (const order of orders) {
+      const drinksResult = await pool.query(
+        `SELECT 
+           d.product_name,
+           d.price,                
+           c.custom_id,
+           c.ice_level,
+           c.sweetness,
+           c.hot_cold,
+           c.toppings,
+           c.miscellaneous,
+           COUNT(*) AS quantity
+         FROM order_drink od
+         JOIN drink d ON od.product_id = d.product_id
+         LEFT JOIN customization c ON d.custom_id = c.custom_id
+         WHERE od.order_id = $1
+         GROUP BY 
+           d.product_name,
+           d.price,
+           c.custom_id,
+           c.ice_level,
+           c.sweetness,
+           c.hot_cold,
+           c.toppings,
+           c.miscellaneous`,
+        [order.order_id]
+      );
+
+      //order.drinks = drinksResult.rows;
+      order.drinks = drinksResult.rows.map(row => ({
+        product_name: row.product_name,
+        price: row.price,                    // may be null if you don't have it
+        quantity: Number(row.quantity),
+        ice_level: row.ice_level,
+        sweetness: row.sweetness,
+        hot_cold: row.hot_cold,
+        toppings: row.toppings,
+        miscellaneous: row.miscellaneous,
+      }));
+    }
+
+    res.json(orders);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch orders' });

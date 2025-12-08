@@ -14,8 +14,52 @@ export default function GetReceipt({ onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
   console.log("Location state:", location.state);
-  const { orderItems, name } = location.state || {};
+  const customerName = location.state?.name || "";
+  //const { orderItems, name } = location.state || {};
   const [placeholder, setPlaceholder] = useState("Enter your email");
+
+function formatOptionsFrontend(drink) {
+  const parts = [];
+  parts.push(drink.hot_cold ? "Hot" : "Cold");
+  if (drink.sweetness !== null && drink.sweetness !== undefined) {
+    parts.push(`${drink.sweetness}% Sugar`);
+  }
+  if (drink.ice_level !== null && drink.ice_level !== undefined) {
+    let iceLabel;
+
+    switch (drink.ice_level) {
+      case 0:
+        iceLabel = "No Ice";
+        break;
+      case 50:
+        iceLabel = "Less Ice";
+        break;
+      case 100:
+        iceLabel = "Regular Ice";
+        break;
+      case 125:
+        iceLabel = "More Ice";
+        break;
+      default:
+        iceLabel = `${drink.ice_level}% Ice`;
+    }
+
+    parts.push(iceLabel);
+  }
+
+  if (drink.toppings) {
+    parts.push(drink.toppings);
+  }
+
+  if (drink.miscellaneous) {
+    parts.push(drink.miscellaneous);
+  }
+
+  return parts.join(" • ");
+}
+
+
+
   
   const handleReceiptRequest = async () => {
     // simple phone validation
@@ -32,18 +76,27 @@ export default function GetReceipt({ onClose }) {
 
     try {
       const orders = await getOrders();
-      const orderId = orders[0].order_id;
-      const subtotal = Number(orders[0].total_order_price);
+      const latestOrder = orders[0];
+      const orderId = latestOrder.order_id;
+      const subtotal = Number(latestOrder.total_order_price);
+      //const items = buildItemsFromOrderItems(orderItems);
+      const items = latestOrder.drinks.map((drink) => {
+        const qty = drink.quantity;
+        const unitPrice = Number(drink.price ?? 0);
+        const lineTotal = unitPrice * qty;
+
+        return {
+          name: drink.product_name,
+          quantity: qty,
+          displayPrice: lineTotal.toFixed(2),
+          options: formatOptionsFrontend(drink),
+        };
+      });
       const result = await sendReceipt({
         id: orderId,
         customerEmail: email,
-        customerName: name,
-        items: orderItems.map(item => ({
-          name: item.name,
-          quantity: item.quantity,
-          displayPrice: item.totalPrice.toFixed(2),
-          options: item.options,
-        })),
+        customerName: customerName,
+        items: items,
         subtotal: subtotal,
         tax: subtotal * 0.0825,
         total: subtotal + (subtotal * 0.0825),

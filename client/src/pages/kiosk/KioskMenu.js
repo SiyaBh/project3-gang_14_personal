@@ -114,7 +114,7 @@ export default function KioskMenu({ orderItems, setOrderItems }) {
     console.log(" Before navigate, orderItems:", orderItems);
     navigate("/welcome/kiosk/order",{ state: { 
       name: customerName,
-      orderItems: orderItems,
+      //orderItems: orderItems,
     
     } });
   };
